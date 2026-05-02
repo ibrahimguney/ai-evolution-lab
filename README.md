@@ -11,6 +11,12 @@ Bu repo universite seviyesinde, matematik ve istatistik temeli olan bir ogrencin
 3. `03_pytorch_char_model.py` - PyTorch ile egitilen karakter seviyesinde dil modeli
 4. `04_minimal_transformer.py` - Causal self-attention kullanan minimal Transformer
 
+Detayli ders anlatimi icin:
+
+```text
+DERS_NOTLARI.md
+```
+
 ## Ogrenme Hedefleri
 
 - Sembolik AI, Machine Learning, Deep Learning ve Transformer donemlerini ayirt etmek
