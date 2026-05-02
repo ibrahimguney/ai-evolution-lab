@@ -9,7 +9,7 @@ Bu repo universite seviyesinde, matematik ve istatistik temeli olan bir ogrencin
 1. `01_ngram_text_predictor.py` - Karakter seviyesinde n-gram metin tahmin modeli
 2. `02-web-ngram/` - Tarayicida calisan interaktif n-gram predictor
 3. `03_pytorch_char_model.py` - PyTorch ile egitilen karakter seviyesinde dil modeli
-4. Minimal Transformer
+4. `04_minimal_transformer.py` - Causal self-attention kullanan minimal Transformer
 
 ## Ogrenme Hedefleri
 
@@ -40,6 +40,12 @@ PyTorch laboratuvari icin:
 ```bash
 python -m pip install -r requirements.txt
 python 03_pytorch_char_model.py
+```
+
+Minimal Transformer laboratuvari icin:
+
+```bash
+python 04_minimal_transformer.py
 ```
 
 ## Mevcut Laboratuvar
@@ -87,6 +93,23 @@ character id -> embedding -> GRU -> linear output -> next character distribution
 
 N-gram modelinden farki, gecisleri sadece saymak yerine parametreleri gradient descent ile ogrenmesidir.
 
+### 04 - Minimal Transformer
+
+Bu laboratuvar karakter seviyesinde kucuk bir Transformer language model kurar.
+
+Model yapisi:
+
+```text
+character id
+  -> token embedding
+  -> positional embedding
+  -> causal self-attention blocks
+  -> linear output
+  -> next character distribution
+```
+
+GRU modelinden farki, sirali gizli durum yerine attention kullanmasidir. Causal mask sayesinde model gelecekteki karakterleri gormeden siradaki karakteri tahmin eder.
+
 ## Calistirma
 
 Repo klasorundeyken:
@@ -102,6 +125,12 @@ PyTorch modeli icin:
 ```bash
 python -m pip install -r requirements.txt
 python 03_pytorch_char_model.py
+```
+
+Minimal Transformer icin:
+
+```bash
+python 04_minimal_transformer.py
 ```
 
 Beklenen cikti:
