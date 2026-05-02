@@ -8,7 +8,7 @@ Bu repo universite seviyesinde, matematik ve istatistik temeli olan bir ogrencin
 
 1. `01_ngram_text_predictor.py` - Karakter seviyesinde n-gram metin tahmin modeli
 2. `02-web-ngram/` - Tarayicida calisan interaktif n-gram predictor
-3. PyTorch karakter modeli
+3. `03_pytorch_char_model.py` - PyTorch ile egitilen karakter seviyesinde dil modeli
 4. Minimal Transformer
 
 ## Ogrenme Hedefleri
@@ -21,6 +21,7 @@ Bu repo universite seviyesinde, matematik ve istatistik temeli olan bir ogrencin
 ## Gereksinimler
 
 - Python 3.10 veya uzeri
+- Asama 3 icin PyTorch
 
 Ek kutuphane gerekmeyen ilk laboratuvar:
 
@@ -32,6 +33,13 @@ Web laboratuvari icin:
 
 ```text
 02-web-ngram/index.html
+```
+
+PyTorch laboratuvari icin:
+
+```bash
+python -m pip install -r requirements.txt
+python 03_pytorch_char_model.py
 ```
 
 ## Mevcut Laboratuvar
@@ -67,6 +75,18 @@ Kullanici:
 - Uretilen metni gorebilir
 - Son context icin karakter olasiliklarini inceleyebilir
 
+### 03 - PyTorch Character Model
+
+Bu laboratuvar karakter seviyesinde egitilen kucuk bir neural language model kurar.
+
+Model yapisi:
+
+```text
+character id -> embedding -> GRU -> linear output -> next character distribution
+```
+
+N-gram modelinden farki, gecisleri sadece saymak yerine parametreleri gradient descent ile ogrenmesidir.
+
 ## Calistirma
 
 Repo klasorundeyken:
@@ -76,6 +96,13 @@ python 01_ngram_text_predictor.py
 ```
 
 Web demosu icin `02-web-ngram/index.html` dosyasini tarayicida ac.
+
+PyTorch modeli icin:
+
+```bash
+python -m pip install -r requirements.txt
+python 03_pytorch_char_model.py
+```
 
 Beklenen cikti:
 
