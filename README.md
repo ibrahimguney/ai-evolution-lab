@@ -7,7 +7,7 @@ Bu repo universite seviyesinde, matematik ve istatistik temeli olan bir ogrencin
 ## Yol Haritasi
 
 1. `01_ngram_text_predictor.py` - Karakter seviyesinde n-gram metin tahmin modeli
-2. Web arayuzlu predictor
+2. `02-web-ngram/` - Tarayicida calisan interaktif n-gram predictor
 3. PyTorch karakter modeli
 4. Minimal Transformer
 
@@ -26,6 +26,12 @@ Ek kutuphane gerekmeyen ilk laboratuvar:
 
 ```bash
 python 01_ngram_text_predictor.py
+```
+
+Web laboratuvari icin:
+
+```text
+02-web-ngram/index.html
 ```
 
 ## Mevcut Laboratuvar
@@ -49,6 +55,18 @@ Ornek:
 
 Bu, LLM'lerdeki next-token prediction fikrinin cok kucuk ve istatistiksel bir benzeridir.
 
+### 02 - Web N-gram Predictor
+
+Bu laboratuvar ayni n-gram fikrini tarayicida etkilesimli hale getirir.
+
+Kullanici:
+
+- Egitim metinlerini degistirebilir
+- `n` degerini ayarlayabilir
+- Temperature degerini oynatabilir
+- Uretilen metni gorebilir
+- Son context icin karakter olasiliklarini inceleyebilir
+
 ## Calistirma
 
 Repo klasorundeyken:
@@ -56,6 +74,8 @@ Repo klasorundeyken:
 ```bash
 python 01_ngram_text_predictor.py
 ```
+
+Web demosu icin `02-web-ngram/index.html` dosyasini tarayicida ac.
 
 Beklenen cikti:
 

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Evolution Lab - N-gram Web Predictor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Aşama 2</p>
+          <h1>N-gram Web Predictor</h1>
+          <p class="summary">
+            Küçük bir karakter modeliyle bağlamdan sonraki karakteri tahmin et. Bu demo, LLM'lerdeki next-token prediction fikrinin sade bir laboratuvarıdır.
+          </p>
+        </div>
+        <div class="status-card">
+          <span>Model</span>
+          <strong id="modelSummary">Hazır</strong>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <section class="panel training-panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">Veri</p>
+              <h2>Eğitim metinleri</h2>
+            </div>
+            <button id="resetButton" class="secondary-button" type="button">Sıfırla</button>
+          </div>
+          <textarea id="trainingText" spellcheck="false"></textarea>
+          <p class="hint">Her satır bir eğitim örneğidir. Model, satırlardaki karakter geçişlerini sayar.</p>
+        </section>
+
+        <section class="panel controls-panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">Üretim</p>
+              <h2>Parametreler</h2>
+            </div>
+            <button id="trainButton" class="primary-button" type="button">Modeli eğit</button>
+          </div>
+
+          <div class="control-grid">
+            <label>
+              Başlangıç metni
+              <input id="seedInput" value="bul" />
+            </label>
+            <label>
+              N değeri
+              <input id="nInput" type="number" min="2" max="8" value="4" />
+            </label>
+            <label>
+              Maksimum uzunluk
+              <input id="maxLenInput" type="number" min="10" max="200" value="80" />
+            </label>
+            <label>
+              Temperature
+              <input id="temperatureInput" type="range" min="0.2" max="2" step="0.1" value="0.9" />
+              <span id="temperatureValue">0.9</span>
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button id="generateButton" class="primary-button" type="button">Metin üret</button>
+            <button id="explainButton" class="secondary-button" type="button">Context açıkla</button>
+          </div>
+
+          <div class="result-box">
+            <span>Üretilen metin</span>
+            <output id="generatedOutput">Henüz üretim yapılmadı.</output>
+          </div>
+        </section>
+      </section>
+
+      <section class="inspector">
+        <div class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">Olasılık</p>
+              <h2>Context dağılımı</h2>
+            </div>
+            <span id="contextLabel" class="pill">context yok</span>
+          </div>
+          <div id="probabilityTable" class="probability-table"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">Yorum</p>
+              <h2>Ne öğreniyoruz?</h2>
+            </div>
+          </div>
+          <ul class="notes">
+            <li>N-gram modeli anlam öğrenmez; sadece kısa karakter bağlamlarını sayar.</li>
+            <li>Temperature yükseldikçe üretim daha çeşitli ama daha hatalı olabilir.</li>
+            <li>Bağlam veri setinde yoksa model üretimi durdurur veya belirsiz kalır.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
