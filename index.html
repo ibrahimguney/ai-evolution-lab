@@ -22,6 +22,7 @@
 
       <nav aria-label="Course sections">
         <a href="#roadmap" data-i18n="navRoadmap">Yol Haritası</a>
+        <a href="#week1" data-i18n="navWeek1">1. Hafta</a>
         <a href="#studio" data-i18n="navStudio">Ders Studio</a>
         <a href="#research" data-i18n="navResearch">Güncel Takip</a>
       </nav>
@@ -78,6 +79,82 @@
         <div class="roadmap-layout">
           <div class="week-list" id="weekList"></div>
           <article class="week-detail panel" id="weekDetail"></article>
+        </div>
+      </section>
+
+      <section class="week-lab" id="week1" aria-labelledby="week1-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="week1Eyebrow">1. hafta uygulaması</p>
+          <h2 id="week1-title" data-i18n="week1Title">AI öğrenme kontratını ve ilk deneyini oluştur.</h2>
+        </div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="contractTitle">Öğrenme kontratı</h3>
+            <label>
+              <span data-i18n="learnerGoalLabel">12 hafta sonunda ne yapabilir olmak istiyorsun?</span>
+              <textarea id="learnerGoalInput" data-placeholder-tr="Örn: RAG tabanlı, kaynak gösteren bir ders asistanı geliştirmek istiyorum." data-placeholder-en="Example: I want to build a sourced RAG-based course assistant."></textarea>
+            </label>
+            <label>
+              <span data-i18n="backgroundLabel">Mevcut seviyen</span>
+              <textarea id="backgroundInput" data-placeholder-tr="Matematik, Python, web, veri analizi ve AI deneyimini kısaca yaz." data-placeholder-en="Briefly describe your math, Python, web, data analysis, and AI background."></textarea>
+            </label>
+            <div class="compact-grid">
+              <label>
+                <span data-i18n="timeLabel">Haftalık süre</span>
+                <input id="timeInput" type="number" min="1" max="40" value="6" />
+              </label>
+              <label>
+                <span data-i18n="capstoneLabel">Final proje yönü</span>
+                <select id="capstoneSelect">
+                  <option value="rag">RAG assistant</option>
+                  <option value="agent">Tool-using agent</option>
+                  <option value="education">AI education product</option>
+                  <option value="evaluation">Model evaluation lab</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="comparisonTitle">İlk model karşılaştırması</h3>
+            <label>
+              <span data-i18n="comparisonPromptLabel">Test sorusu</span>
+              <textarea id="comparisonPromptInput" data-placeholder-tr="Örn: Bir öğrenciye overfitting kavramını nasıl öğretirsin?" data-placeholder-en="Example: How would you teach overfitting to a student?"></textarea>
+            </label>
+            <button class="primary-button full-button" id="generateComparisonButton" type="button" data-i18n="generateComparison">
+              Örnek cevapları üret
+            </button>
+          </section>
+        </div>
+
+        <div class="model-grid" id="modelComparisonGrid"></div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="newsTitle">Güncel AI takip kaydı</h3>
+            <label>
+              <span data-i18n="newsSourceLabel">Kaynak / başlık</span>
+              <input id="newsSourceInput" type="text" data-placeholder-tr="Örn: Yeni bir model duyurusu, paper veya benchmark haberi" data-placeholder-en="Example: A new model release, paper, or benchmark news" />
+            </label>
+            <label>
+              <span data-i18n="newsClaimLabel">Ana iddia</span>
+              <textarea id="newsClaimInput" data-placeholder-tr="Haberdeki temel iddia nedir? Hangi kanıtla destekleniyor?" data-placeholder-en="What is the main claim? What evidence supports it?"></textarea>
+            </label>
+            <label>
+              <span data-i18n="newsImpactLabel">Derse etkisi</span>
+              <textarea id="newsImpactInput" data-placeholder-tr="Bu gelişme hangi haftayla ilişkili? Projeni nasıl etkiler?" data-placeholder-en="Which week is this related to? How could it affect your project?"></textarea>
+            </label>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="portfolioDraftTitle">Portfolyo çıktısı</h3>
+            <textarea id="portfolioOutput" spellcheck="false"></textarea>
+            <div class="notes-actions">
+              <button class="primary-button" id="buildPortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
+              <button class="secondary-button" id="copyPortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
+            </div>
+          </section>
         </div>
       </section>
 

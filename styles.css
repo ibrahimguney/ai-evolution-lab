@@ -34,7 +34,9 @@ body {
 }
 
 button,
-textarea {
+textarea,
+input,
+select {
   font: inherit;
 }
 
@@ -323,6 +325,7 @@ h4 {
 }
 
 .roadmap,
+.week-lab,
 .studio,
 .research {
   padding: 42px 0;
@@ -441,7 +444,9 @@ h4 {
 }
 
 .studio-grid,
-.research-grid {
+.research-grid,
+.week1-grid,
+.model-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -449,14 +454,17 @@ h4 {
 
 .notebook-panel,
 .notebook-panel label,
-.panel {
+.panel,
+.lab-panel,
+.model-card {
   display: grid;
   gap: 14px;
 }
 
-textarea {
+textarea,
+input,
+select {
   width: 100%;
-  min-height: 150px;
   border: 1px solid #cddbd4;
   border-radius: 8px;
   background: #fff;
@@ -467,13 +475,52 @@ textarea {
   line-height: 1.55;
 }
 
-textarea:focus {
+input,
+select {
+  min-height: 44px;
+}
+
+textarea {
+  min-height: 150px;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
 }
 
 #promptOutput {
   min-height: 230px;
+}
+
+.compact-grid,
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.model-grid {
+  margin: 16px 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.model-card textarea {
+  min-height: 178px;
+}
+
+.model-card .panel-title strong {
+  border-radius: 8px;
+  background: var(--soft);
+  padding: 6px 9px;
+}
+
+#portfolioOutput {
+  min-height: 360px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
 }
 
 .full-button {
@@ -544,7 +591,9 @@ textarea:focus {
   .app-header,
   .hero,
   .roadmap-layout,
-  .studio-grid {
+  .studio-grid,
+  .week1-grid,
+  .model-grid {
     grid-template-columns: 1fr;
   }
 
@@ -576,7 +625,7 @@ textarea:focus {
 
   .app-header nav {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .app-header nav a {
@@ -584,7 +633,9 @@ textarea:focus {
   }
 
   .stat-grid,
-  .research-grid {
+  .research-grid,
+  .compact-grid,
+  .score-grid {
     grid-template-columns: 1fr;
   }
 }

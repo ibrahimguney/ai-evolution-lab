@@ -2,6 +2,7 @@ const translations = {
   tr: {
     brandSub: "Yaparak yapay zeka öğrenimi",
     navRoadmap: "Yol Haritası",
+    navWeek1: "1. Hafta",
     navStudio: "Ders Studio",
     navResearch: "Güncel Takip",
     heroEyebrow: "TR/ENG çift dilli ders platformu",
@@ -19,6 +20,28 @@ const translations = {
     progressLabel: "Tamamlanan görev",
     roadmapEyebrow: "Müfredat",
     roadmapTitle: "12 haftalık yaparak öğrenme yolu",
+    week1Eyebrow: "1. hafta uygulaması",
+    week1Title: "AI öğrenme kontratını ve ilk deneyini oluştur.",
+    contractTitle: "Öğrenme kontratı",
+    learnerGoalLabel: "12 hafta sonunda ne yapabilir olmak istiyorsun?",
+    backgroundLabel: "Mevcut seviyen",
+    timeLabel: "Haftalık süre",
+    capstoneLabel: "Final proje yönü",
+    comparisonTitle: "İlk model karşılaştırması",
+    comparisonPromptLabel: "Test sorusu",
+    generateComparison: "Örnek cevapları üret",
+    newsTitle: "Güncel AI takip kaydı",
+    newsSourceLabel: "Kaynak / başlık",
+    newsClaimLabel: "Ana iddia",
+    newsImpactLabel: "Derse etkisi",
+    portfolioDraftTitle: "Portfolyo çıktısı",
+    buildPortfolio: "Portfolyo özeti üret",
+    copyPortfolio: "Kopyala",
+    modelAnswer: "Cevap",
+    scoreClarity: "Açıklık",
+    scoreEvidence: "Kanıt",
+    scoreAction: "Uygulanabilirlik",
+    scoreRisk: "Risk farkındalığı",
     studioEyebrow: "Ders studio",
     studioTitle: "Her hafta teori, kod, deney ve yansıtma üretir.",
     promptTitle: "Ders tasarım promptu",
@@ -50,6 +73,7 @@ const translations = {
   en: {
     brandSub: "Learning AI by building",
     navRoadmap: "Roadmap",
+    navWeek1: "Week 1",
     navStudio: "Course Studio",
     navResearch: "Research Radar",
     heroEyebrow: "TR/ENG bilingual course platform",
@@ -67,6 +91,28 @@ const translations = {
     progressLabel: "Completed tasks",
     roadmapEyebrow: "Curriculum",
     roadmapTitle: "A 12-week learning-by-doing path",
+    week1Eyebrow: "Week 1 lab",
+    week1Title: "Create your AI learning contract and first experiment.",
+    contractTitle: "Learning contract",
+    learnerGoalLabel: "What do you want to be able to do after 12 weeks?",
+    backgroundLabel: "Current background",
+    timeLabel: "Weekly hours",
+    capstoneLabel: "Final project direction",
+    comparisonTitle: "First model comparison",
+    comparisonPromptLabel: "Test question",
+    generateComparison: "Generate sample answers",
+    newsTitle: "Current AI tracking log",
+    newsSourceLabel: "Source / title",
+    newsClaimLabel: "Main claim",
+    newsImpactLabel: "Course impact",
+    portfolioDraftTitle: "Portfolio artifact",
+    buildPortfolio: "Build portfolio summary",
+    copyPortfolio: "Copy",
+    modelAnswer: "Answer",
+    scoreClarity: "Clarity",
+    scoreEvidence: "Evidence",
+    scoreAction: "Actionability",
+    scoreRisk: "Risk awareness",
     studioEyebrow: "Course studio",
     studioTitle: "Each week produces theory, code, experiments, and reflection.",
     promptTitle: "Course design prompt",
@@ -431,6 +477,33 @@ const researchItems = [
   },
 ];
 
+const comparisonModels = [
+  {
+    id: "baseline",
+    name: "Baseline AI",
+    tr:
+      "Bu cevap kavramı kısa tanımlar ve doğrudan örnek verir. Güçlü yanı hızlı anlaşılmasıdır; zayıf yanı kaynak, sınır ve hata analizi sunmamasıdır.",
+    en:
+      "This answer briefly defines the concept and gives a direct example. Its strength is speed and clarity; its weakness is the lack of sources, limits, and error analysis.",
+  },
+  {
+    id: "tutor",
+    name: "Tutor AI",
+    tr:
+      "Bu cevap öğrencinin ön bilgisini sorar, kavramı küçük parçalara böler, mini alıştırma verir ve sonunda öğrenciden kendi cümlesiyle açıklama ister.",
+    en:
+      "This answer asks about prior knowledge, breaks the concept into smaller parts, gives a mini exercise, and asks the student to explain it in their own words.",
+  },
+  {
+    id: "research",
+    name: "Research AI",
+    tr:
+      "Bu cevap kavramı teknik terimlerle açıklar, ölçme yöntemi önerir, belirsizlikleri not eder ve güncel literatür ya da benchmark ile doğrulama ihtiyacını belirtir.",
+    en:
+      "This answer explains the concept technically, proposes a measurement method, notes uncertainties, and states the need to verify with current literature or benchmarks.",
+  },
+];
+
 const starterPrompt = {
   tr: `AI Evolution Lab için TR/ENG çift dilli, proje tabanlı bir yapay zeka dersi tasarla. Her hafta kısa teori, çalışan mini proje, kodlama görevi, deney görevi, yansıtma sorusu, güncel AI takip görevi ve portfolyo çıktısı içersin. Lisans ve lisansüstü derinliklerini ayrı belirt.`,
   en: `Design a TR/ENG bilingual, project-based AI course for AI Evolution Lab. Each week should include short theory, a working mini project, coding task, experiment task, reflection question, current AI tracking task, and portfolio artifact. Separate undergraduate and graduate depth.`,
@@ -452,6 +525,19 @@ const els = {
   progressText: document.querySelector("#progressText"),
   progressBar: document.querySelector("#progressBar"),
   promptOutput: document.querySelector("#promptOutput"),
+  learnerGoalInput: document.querySelector("#learnerGoalInput"),
+  backgroundInput: document.querySelector("#backgroundInput"),
+  timeInput: document.querySelector("#timeInput"),
+  capstoneSelect: document.querySelector("#capstoneSelect"),
+  comparisonPromptInput: document.querySelector("#comparisonPromptInput"),
+  generateComparisonButton: document.querySelector("#generateComparisonButton"),
+  modelComparisonGrid: document.querySelector("#modelComparisonGrid"),
+  newsSourceInput: document.querySelector("#newsSourceInput"),
+  newsClaimInput: document.querySelector("#newsClaimInput"),
+  newsImpactInput: document.querySelector("#newsImpactInput"),
+  portfolioOutput: document.querySelector("#portfolioOutput"),
+  buildPortfolioButton: document.querySelector("#buildPortfolioButton"),
+  copyPortfolioButton: document.querySelector("#copyPortfolioButton"),
   copyPromptButton: document.querySelector("#copyPromptButton"),
   copyStudioPrompt: document.querySelector("#copyStudioPrompt"),
   hypothesisInput: document.querySelector("#hypothesisInput"),
@@ -464,6 +550,7 @@ const els = {
 
 render();
 restoreNotebook();
+restoreWeek1();
 
 els.langToggle.addEventListener("click", () => {
   state.lang = state.lang === "tr" ? "en" : "tr";
@@ -480,6 +567,13 @@ els.levelToggle.addEventListener("click", () => {
 els.copyPromptButton.addEventListener("click", copyPrompt);
 els.copyStudioPrompt.addEventListener("click", copyPrompt);
 els.saveNotebookButton.addEventListener("click", saveNotebook);
+els.generateComparisonButton.addEventListener("click", generateComparison);
+els.buildPortfolioButton.addEventListener("click", buildPortfolio);
+els.copyPortfolioButton.addEventListener("click", copyPortfolio);
+[els.learnerGoalInput, els.backgroundInput, els.timeInput, els.capstoneSelect, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
+  input.addEventListener("input", saveWeek1);
+  input.addEventListener("change", saveWeek1);
+});
 
 function render() {
   document.documentElement.lang = state.lang;
@@ -487,6 +581,7 @@ function render() {
   renderWeeks();
   renderWeekDetail();
   renderResearch();
+  renderComparisonGrid();
   renderProgress();
   updatePrompt();
 }
@@ -500,6 +595,9 @@ function renderTranslations() {
   els.levelToggle.textContent = state.level === "undergrad" ? dict.levelUndergrad : dict.levelGrad;
   els.courseLevel.textContent = els.levelToggle.textContent;
   [els.hypothesisInput, els.observationInput].forEach((input) => {
+    input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
+  });
+  [els.learnerGoalInput, els.backgroundInput, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
 }
@@ -599,6 +697,97 @@ function renderResearch() {
     .join("");
 }
 
+function renderComparisonGrid() {
+  const dict = translations[state.lang];
+  els.modelComparisonGrid.innerHTML = comparisonModels
+    .map(
+      (model) => `
+        <article class="panel model-card" data-model-card="${model.id}">
+          <div class="panel-title">
+            <span>${escapeHtml(model.name)}</span>
+            <strong id="score-${model.id}">0/20</strong>
+          </div>
+          <label>
+            <span>${dict.modelAnswer}</span>
+            <textarea data-model-answer="${model.id}">${escapeHtml(model[state.lang])}</textarea>
+          </label>
+          <div class="score-grid">
+            ${scoreSelect(model.id, "clarity", dict.scoreClarity)}
+            ${scoreSelect(model.id, "evidence", dict.scoreEvidence)}
+            ${scoreSelect(model.id, "action", dict.scoreAction)}
+            ${scoreSelect(model.id, "risk", dict.scoreRisk)}
+          </div>
+        </article>
+      `,
+    )
+    .join("");
+
+  els.modelComparisonGrid.querySelectorAll("textarea, select").forEach((input) => {
+    input.addEventListener("input", () => {
+      updateScores();
+      saveWeek1();
+    });
+    input.addEventListener("change", () => {
+      updateScores();
+      saveWeek1();
+    });
+  });
+  restoreModelScores();
+  updateScores();
+}
+
+function scoreSelect(modelId, key, label) {
+  return `
+    <label>
+      <span>${label}</span>
+      <select data-score="${modelId}:${key}">
+        ${[1, 2, 3, 4, 5].map((score) => `<option value="${score}">${score}</option>`).join("")}
+      </select>
+    </label>
+  `;
+}
+
+function generateComparison() {
+  const prompt = els.comparisonPromptInput.value.trim();
+  const prefix =
+    state.lang === "tr"
+      ? prompt || "Bir öğrenciye overfitting kavramını nasıl öğretirsin?"
+      : prompt || "How would you teach overfitting to a student?";
+  comparisonModels.forEach((model) => {
+    const textarea = document.querySelector(`[data-model-answer="${model.id}"]`);
+    textarea.value = `${prefix}\n\n${model[state.lang]}`;
+  });
+  saveWeek1();
+  showToast(translations[state.lang].saved);
+}
+
+function updateScores() {
+  comparisonModels.forEach((model) => {
+    const selects = Array.from(document.querySelectorAll(`[data-score^="${model.id}:"]`));
+    const total = selects.reduce((sum, select) => sum + Number(select.value), 0);
+    const score = document.querySelector(`#score-${model.id}`);
+    if (score) score.textContent = `${total}/20`;
+  });
+}
+
+function buildPortfolio() {
+  const dict = translations[state.lang];
+  const modelSummaries = comparisonModels
+    .map((model) => {
+      const score = document.querySelector(`#score-${model.id}`)?.textContent || "0/20";
+      const answer = document.querySelector(`[data-model-answer="${model.id}"]`)?.value.trim() || "";
+      return `- ${model.name}: ${score}\n  ${answer.split("\n")[0] || "-"}`;
+    })
+    .join("\n");
+
+  els.portfolioOutput.value =
+    state.lang === "tr"
+      ? `# AI Evolution Lab - 1. Hafta Portfolyo Çıktısı\n\n## Öğrenme Kontratı\nHedef: ${els.learnerGoalInput.value || "-"}\nMevcut seviye: ${els.backgroundInput.value || "-"}\nHaftalık süre: ${els.timeInput.value || "-"} saat\nFinal proje yönü: ${els.capstoneSelect.value}\n\n## İlk Model Karşılaştırması\nTest sorusu: ${els.comparisonPromptInput.value || "-"}\n${modelSummaries}\n\n## Güncel AI Takip Kaydı\nKaynak / başlık: ${els.newsSourceInput.value || "-"}\nAna iddia: ${els.newsClaimInput.value || "-"}\nDerse etkisi: ${els.newsImpactInput.value || "-"}\n\n## Kısa Yansıtma\nBu hafta AI çıktısını değerlendirirken yalnızca akıcı metne değil; kanıt, sınır, risk ve uygulanabilirliğe bakmam gerektiğini öğrendim.`
+      : `# AI Evolution Lab - Week 1 Portfolio Artifact\n\n## Learning Contract\nGoal: ${els.learnerGoalInput.value || "-"}\nCurrent background: ${els.backgroundInput.value || "-"}\nWeekly time: ${els.timeInput.value || "-"} hours\nFinal project direction: ${els.capstoneSelect.value}\n\n## First Model Comparison\nTest question: ${els.comparisonPromptInput.value || "-"}\n${modelSummaries}\n\n## Current AI Tracking Log\nSource / title: ${els.newsSourceInput.value || "-"}\nMain claim: ${els.newsClaimInput.value || "-"}\nCourse impact: ${els.newsImpactInput.value || "-"}\n\n## Short Reflection\nThis week I learned to evaluate AI outputs beyond fluent text: evidence, limitations, risk, and actionability matter.`;
+  saveWeek1();
+  showToast(dict.saved);
+}
+
 function renderProgress() {
   const completed = state.done.length;
   els.progressText.textContent = `${completed}/12`;
@@ -647,6 +836,69 @@ function saveNotebook() {
   window.setTimeout(() => {
     els.saveState.textContent = translations[state.lang].localSave;
   }, 1600);
+}
+
+function saveWeek1() {
+  const scores = {};
+  document.querySelectorAll("[data-score]").forEach((select) => {
+    scores[select.dataset.score] = select.value;
+  });
+  const answers = {};
+  document.querySelectorAll("[data-model-answer]").forEach((textarea) => {
+    answers[textarea.dataset.modelAnswer] = textarea.value;
+  });
+  localStorage.setItem(
+    "ai-evolution-week1",
+    JSON.stringify({
+      learnerGoal: els.learnerGoalInput.value,
+      background: els.backgroundInput.value,
+      time: els.timeInput.value,
+      capstone: els.capstoneSelect.value,
+      comparisonPrompt: els.comparisonPromptInput.value,
+      newsSource: els.newsSourceInput.value,
+      newsClaim: els.newsClaimInput.value,
+      newsImpact: els.newsImpactInput.value,
+      portfolio: els.portfolioOutput.value,
+      scores,
+      answers,
+    }),
+  );
+}
+
+function restoreWeek1() {
+  const saved = JSON.parse(localStorage.getItem("ai-evolution-week1") || "{}");
+  els.learnerGoalInput.value = saved.learnerGoal || "";
+  els.backgroundInput.value = saved.background || "";
+  els.timeInput.value = saved.time || "6";
+  els.capstoneSelect.value = saved.capstone || "rag";
+  els.comparisonPromptInput.value = saved.comparisonPrompt || "";
+  els.newsSourceInput.value = saved.newsSource || "";
+  els.newsClaimInput.value = saved.newsClaim || "";
+  els.newsImpactInput.value = saved.newsImpact || "";
+  els.portfolioOutput.value = saved.portfolio || "";
+  restoreModelScores();
+}
+
+function restoreModelScores() {
+  const saved = JSON.parse(localStorage.getItem("ai-evolution-week1") || "{}");
+  Object.entries(saved.scores || {}).forEach(([key, value]) => {
+    const select = document.querySelector(`[data-score="${key}"]`);
+    if (select) select.value = value;
+  });
+  Object.entries(saved.answers || {}).forEach(([key, value]) => {
+    const textarea = document.querySelector(`[data-model-answer="${key}"]`);
+    if (textarea) textarea.value = value;
+  });
+}
+
+async function copyPortfolio() {
+  if (navigator.clipboard) {
+    await navigator.clipboard.writeText(els.portfolioOutput.value);
+  } else {
+    els.portfolioOutput.select();
+    document.execCommand("copy");
+  }
+  showToast(translations[state.lang].copied);
 }
 
 function restoreNotebook() {
