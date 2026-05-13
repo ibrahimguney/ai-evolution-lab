@@ -1,1116 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Evolution Lab</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #08090a;
-    --surface: #0f1114;
-    --surface2: #161a1f;
-    --border: rgba(255,255,255,0.06);
-    --border-glow: rgba(255,255,255,0.12);
-    --text: #e8eaed;
-    --muted: #6b7280;
-    --accent: #a8ff78;
-    --accent2: #38bdf8;
-    --accent3: #f472b6;
-    --accent4: #fb923c;
-    --accent5: #c084fc;
-    --mono: 'Space Mono', monospace;
-    --sans: 'Syne', sans-serif;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 32px; height: 32px;
-    border: 1px solid rgba(168,255,120,0.4);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.15s, width 0.2s, height 0.2s;
-  }
-
-  /* Noise overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 clamp(24px, 6vw, 120px);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(168,255,120,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(168,255,120,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridShift 20s linear infinite;
-  }
-
-  @keyframes gridShift {
-    from { transform: translateY(0); }
-    to { transform: translateY(60px); }
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(168,255,120,0.06) 0%, transparent 70%);
-    top: -100px; right: -100px;
-    animation: pulse 6s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
-
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-title {
-    font-size: clamp(52px, 9vw, 130px);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-title .line2 {
-    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
-    color: transparent;
-  }
-
-  .hero-title .line3 {
-    color: var(--accent);
-  }
-
-  .hero-desc {
-    max-width: 520px;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--muted);
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-
-  .btn {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 14px 28px;
-    border-radius: 2px;
-    border: 1px solid;
-    cursor: none;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-    font-weight: 700;
-  }
-
-  .btn-primary:hover {
-    background: transparent;
-    color: var(--accent);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--border-glow);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--text);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: clamp(24px, 6vw, 120px);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.2s forwards;
-  }
-
-  .scroll-line {
-    width: 40px;
-    height: 1px;
-    background: var(--muted);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scroll-line::after {
-    content: '';
-    position: absolute;
-    left: -100%;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--accent);
-    animation: scrollAnim 2s ease-in-out infinite;
-  }
-
-  @keyframes scrollAnim {
-    0% { left: -100%; }
-    100% { left: 100%; }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ─── TIMELINE / LABS ─── */
-  .section {
-    padding: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 120px);
-  }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .section-title {
-    font-size: clamp(32px, 5vw, 64px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 80px;
-  }
-
-  /* Lab cards in timeline */
-  .timeline {
-    position: relative;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), var(--accent4), transparent);
-    opacity: 0.3;
-  }
-
-  .lab-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    padding: 60px 0 60px 48px;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    transition: all 0.3s;
-  }
-
-  .lab-card:last-child {
-    border-bottom: none;
-  }
-
-  .lab-card::before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    top: 68px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid;
-    background: var(--bg);
-    transition: all 0.3s;
-  }
-
-  .lab-card:nth-child(1)::before { border-color: var(--accent); }
-  .lab-card:nth-child(2)::before { border-color: var(--accent2); }
-  .lab-card:nth-child(3)::before { border-color: var(--accent3); }
-  .lab-card:nth-child(4)::before { border-color: var(--accent4); }
-
-  .lab-card:hover::before {
-    transform: scale(1.5);
-    background: currentColor;
-  }
-
-  .lab-meta { }
-
-  .lab-number {
-    font-family: var(--mono);
-    font-size: 72px;
-    font-weight: 700;
-    line-height: 1;
-    -webkit-text-stroke: 1px rgba(255,255,255,0.1);
-    color: transparent;
-    margin-bottom: 16px;
-    transition: all 0.3s;
-  }
-
-  .lab-card:hover .lab-number {
-    -webkit-text-stroke-color: rgba(255,255,255,0.3);
-  }
-
-  .lab-era {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
-    display: inline-block;
-    margin-bottom: 16px;
-  }
-
-  .era-1 { background: rgba(168,255,120,0.1); color: var(--accent); }
-  .era-2 { background: rgba(56,189,248,0.1); color: var(--accent2); }
-  .era-3 { background: rgba(244,114,182,0.1); color: var(--accent3); }
-  .era-4 { background: rgba(251,146,60,0.1); color: var(--accent4); }
-
-  .lab-title {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    line-height: 1.2;
-  }
-
-  .lab-subtitle {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
-  .lab-detail { }
-
-  .lab-desc {
-    font-size: 15px;
-    line-height: 1.75;
-    color: rgba(232,234,237,0.7);
-    margin-bottom: 28px;
-  }
-
-  .lab-concept {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .lab-concept::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-
-  .lab-card:nth-child(1) .lab-concept::before { background: var(--accent); }
-  .lab-card:nth-child(2) .lab-concept::before { background: var(--accent2); }
-  .lab-card:nth-child(3) .lab-concept::before { background: var(--accent3); }
-  .lab-card:nth-child(4) .lab-concept::before { background: var(--accent4); }
-
-  .concept-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  .concept-formula {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  .concept-formula span {
-    opacity: 0.5;
-  }
-
-  .lab-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 4px 10px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .lab-link {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--border-glow);
-    padding-bottom: 2px;
-    transition: all 0.2s;
-  }
-
-  .lab-link:hover {
-    border-color: var(--text);
-    gap: 14px;
-  }
-
-  /* ─── EVOLUTION BAR ─── */
-  .evolution {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 80px clamp(24px, 6vw, 120px);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .evo-track {
-    display: flex;
-    gap: 0;
-    margin-top: 60px;
-    position: relative;
-  }
-
-  .evo-track::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent4), var(--accent5));
-    opacity: 0.4;
-  }
-
-  .evo-item {
-    flex: 1;
-    padding-top: 56px;
-    position: relative;
-    padding-right: 20px;
-  }
-
-  .evo-dot {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid;
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .evo-dot::after {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
-  .evo-item:nth-child(1) .evo-dot { color: var(--accent); border-color: var(--accent); }
-  .evo-item:nth-child(2) .evo-dot { color: var(--accent2); border-color: var(--accent2); }
-  .evo-item:nth-child(3) .evo-dot { color: var(--accent3); border-color: var(--accent3); }
-  .evo-item:nth-child(4) .evo-dot { color: var(--accent4); border-color: var(--accent4); }
-  .evo-item:nth-child(5) .evo-dot { color: var(--accent5); border-color: var(--accent5); }
-
-  .evo-year {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  .evo-name {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-
-  .evo-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* ─── STATS ─── */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
-  }
-
-  .stat {
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 48px 40px;
-  }
-
-  .stat-num {
-    font-family: var(--mono);
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--text), var(--muted));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .stat-label {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.4;
-  }
-
-  /* ─── REQUIREMENTS ─── */
-  .req-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .req-item {
-    background: var(--surface);
-    padding: 32px;
-    transition: background 0.2s;
-  }
-
-  .req-item:hover {
-    background: var(--surface2);
-  }
-
-  .req-icon {
-    font-family: var(--mono);
-    font-size: 24px;
-    margin-bottom: 16px;
-    display: block;
-    color: var(--accent);
-  }
-
-  .req-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .req-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .code-block {
-    background: #000;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px 24px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .code-block::before {
-    content: '$ ';
-    color: var(--muted);
-  }
-
-  .code-block .comment {
-    display: block;
-    color: var(--muted);
-    font-size: 11px;
-    margin-bottom: 8px;
-  }
-
-  .code-block .comment::before {
-    content: '# ';
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 60px clamp(24px, 6vw, 120px);
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 32px;
-  }
-
-  .footer-brand {
-    font-size: 24px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-
-  .footer-brand span { color: var(--accent); }
-
-  .footer-note {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 360px;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 24px;
-  }
-
-  .footer-links a {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--text); }
-
-  /* ─── MARQUEE ─── */
-  .marquee-wrap {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 0;
-    overflow: hidden;
-    background: var(--surface);
-  }
-
-  .marquee {
-    display: flex;
-    gap: 0;
-    animation: marquee 30s linear infinite;
-    width: max-content;
-  }
-
-  .marquee-item {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 0 40px;
-    white-space: nowrap;
-  }
-
-  .marquee-item span {
-    color: var(--accent);
-    margin-right: 6px;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    .lab-card {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .stats {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .req-grid {
-      grid-template-columns: 1fr;
-    }
-    .evo-track {
-      flex-direction: column;
-      gap: 40px;
-    }
-    .evo-track::before { display: none; }
-    .evo-item { padding-top: 0; padding-left: 32px; }
-    .evo-dot { top: 0; }
-  }
-
-  @media (max-width: 600px) {
-    .stats { grid-template-columns: 1fr 1fr; }
-    .lab-number { font-size: 48px; }
-    footer { flex-direction: column; align-items: flex-start; }
-  }
-
-  /* Scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
-</head>
-<body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- ─── HERO ─── -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-
-  <p class="hero-eyebrow">// Laboratory Series · 2024</p>
-  <h1 class="hero-title">
-    <span class="line1">AI</span><br>
-    <span class="line2">Evolution</span><br>
-    <span class="line3">Lab</span>
-  </h1>
-  <p class="hero-desc">
-    Yapay zekanın sembolik AI'dan modern Transformer'lara uzanan evrimini,
-    çalışan kod ve adım adım örneklerle keşfet. Matematiği bil, kodu gör, fikirleri anla.
-  </p>
-  <div class="hero-cta">
-    <a href="#labs" class="btn btn-primary">Laboratuvara Gir →</a>
-    <a href="https://github.com/ibrahimguney/ai-evolution-lab" class="btn btn-outline" target="_blank">GitHub ↗</a>
-  </div>
-
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    SCROLL
-  </div>
-</section>
-
-<!-- ─── MARQUEE ─── -->
-<div class="marquee-wrap">
-  <div class="marquee">
-    <span class="marquee-item"><span>01</span> N-gram Predictor</span>
-    <span class="marquee-item"><span>02</span> Web Interactive</span>
-    <span class="marquee-item"><span>03</span> PyTorch RNN</span>
-    <span class="marquee-item"><span>04</span> Transformer</span>
-    <span class="marquee-item"><span>//</span> Next-token Prediction</span>
-    <span class="marquee-item"><span>//</span> Self-attention</span>
-    <span class="marquee-item"><span>//</span> Gradient Descent</span>
-    <span class="marquee-item"><span>//</span> Character Embedding</span>
-    <!-- duplicate for seamless loop -->
-    <span class="marquee-item"><span>01</span> N-gram Predictor</span>
-    <span class="marquee-item"><span>02</span> Web Interactive</span>
-    <span class="marquee-item"><span>03</span> PyTorch RNN</span>
-    <span class="marquee-item"><span>04</span> Transformer</span>
-    <span class="marquee-item"><span>//</span> Next-token Prediction</span>
-    <span class="marquee-item"><span>//</span> Self-attention</span>
-    <span class="marquee-item"><span>//</span> Gradient Descent</span>
-    <span class="marquee-item"><span>//</span> Character Embedding</span>
-  </div>
-</div>
-
-<!-- ─── STATS ─── -->
-<div class="stats reveal">
-  <div class="stat">
-    <div class="stat-num">04</div>
-    <div class="stat-label">Laboratuvar<br>Aşaması</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">~70</div>
-    <div class="stat-label">Yıllık AI<br>Tarihi</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">0→∞</div>
-    <div class="stat-label">Parametre<br>Evrimi</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">1</div>
-    <div class="stat-label">Temel Fikir:<br>Next Token</div>
-  </div>
-</div>
-
-<!-- ─── LABS ─── -->
-<section class="section" id="labs">
-  <p class="section-label reveal">Laboratuvarlar</p>
-  <h2 class="section-title reveal">Dört Aşama,<br>Bir Evrim</h2>
-
-  <div class="timeline">
-
-    <!-- Lab 01 -->
-    <div class="lab-card reveal">
-      <div class="lab-meta">
-        <div class="lab-number">01</div>
-        <div class="lab-era era-1">İstatistiksel AI · 1950s–</div>
-        <h3 class="lab-title">N-gram Text Predictor</h3>
-        <p class="lab-subtitle">01_ngram_text_predictor.py</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Evolution Lab</title>
+    <meta
+      name="description"
+      content="TR/ENG proje tabanli yapay zeka dersi: machine learning, deep learning, LLM, RAG, agents ve guncel AI okuryazarligi."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="AI Evolution Lab">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+        <span>
+          <strong>AI Evolution Lab</strong>
+          <small data-i18n="brandSub">Yaparak yapay zeka öğrenimi</small>
+        </span>
+      </a>
+
+      <nav aria-label="Course sections">
+        <a href="#roadmap" data-i18n="navRoadmap">Yol Haritası</a>
+        <a href="#studio" data-i18n="navStudio">Ders Studio</a>
+        <a href="#research" data-i18n="navResearch">Güncel Takip</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="chip-button" id="levelToggle" type="button">Lisans</button>
+        <button class="chip-button" id="langToggle" type="button">EN</button>
       </div>
-      <div class="lab-detail">
-        <p class="lab-desc">
-          Karakter seviyesinde bir n-gram modeli, LLM'lerin temel sorusunu cevaplar:
-          <em>"Son n-1 karaktere bakarak sıradaki karakter ne olabilir?"</em>
-          Gradient descent yok, parametre yok — sadece istatistik.
-        </p>
-        <div class="lab-concept">
-          <p class="concept-label">Temel Fikir</p>
-          <p class="concept-formula">
-            P(c | c₁c₂...cₙ₋₁) = count(c₁...cₙ) / count(c₁...cₙ₋₁)<br>
-            <span>"dos" → "y" &nbsp;|&nbsp; "bul" → "u"</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="heroEyebrow">TR/ENG çift dilli ders platformu</p>
+          <h1 id="hero-title" data-i18n="heroTitle">Yapay zekayı okuyarak değil, model kurarak öğren.</h1>
+          <p data-i18n="heroText">
+            Lisans ve lisansüstü düzey için tasarlanan bu platform, her hafta çalışan bir mini proje,
+            deney defteri, paper okuma görevi ve portfolyo çıktısı üretir.
           </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#roadmap" data-i18n="startButton">12 haftalık derse başla</a>
+            <button class="secondary-button" id="copyPromptButton" type="button" data-i18n="copyPrompt">
+              Başlangıç promptunu kopyala
+            </button>
+          </div>
         </div>
-        <div class="lab-tags">
-          <span class="tag">Python</span>
-          <span class="tag">No deps</span>
-          <span class="tag">Statistics</span>
-          <span class="tag">Frequency Table</span>
+
+        <aside class="hero-panel" aria-label="Course summary">
+          <div class="panel-title">
+            <span data-i18n="courseIdentity">Ders hüviyeti</span>
+            <strong id="courseLevel">Lisans</strong>
+          </div>
+          <div class="stat-grid">
+            <span><strong>12</strong><small data-i18n="weeksLabel">hafta</small></span>
+            <span><strong>12</strong><small data-i18n="projectsLabel">mini proje</small></span>
+            <span><strong>6</strong><small data-i18n="portfolioLabel">portfolyo çıktısı</small></span>
+            <span><strong>TR/ENG</strong><small data-i18n="languageLabel">dil desteği</small></span>
+          </div>
+          <div class="progress-card">
+            <div>
+              <span data-i18n="progressLabel">Tamamlanan görev</span>
+              <strong id="progressText">0/12</strong>
+            </div>
+            <div class="progress-track"><span id="progressBar"></span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="roadmap" id="roadmap" aria-labelledby="roadmap-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="roadmapEyebrow">Müfredat</p>
+          <h2 id="roadmap-title" data-i18n="roadmapTitle">12 haftalık yaparak öğrenme yolu</h2>
         </div>
-        <a href="01_ngram_text_predictor.py" class="lab-link">Kodu İncele →</a>
-      </div>
-    </div>
-
-    <!-- Lab 02 -->
-    <div class="lab-card reveal">
-      <div class="lab-meta">
-        <div class="lab-number">02</div>
-        <div class="lab-era era-2">Web Demo · İnteraktif</div>
-        <h3 class="lab-title">Web N-gram Predictor</h3>
-        <p class="lab-subtitle">02-web-ngram/index.html</p>
-      </div>
-      <div class="lab-detail">
-        <p class="lab-desc">
-          Aynı n-gram mantığını tarayıcıda canlandır. Eğitim metnini değiştir,
-          <code style="font-family:var(--mono);font-size:12px;color:var(--accent2)">n</code> ve
-          <code style="font-family:var(--mono);font-size:12px;color:var(--accent2)">temperature</code>
-          değerlerini ayarla, karakter olasılıklarını canlı gör.
-        </p>
-        <div class="lab-concept">
-          <p class="concept-label">Kontroller</p>
-          <p class="concept-formula">
-            n-gram size: [2 – 6]<br>
-            temperature: [0.1 – 2.0]<br>
-            <span>Yüksek temp → yaratıcı &nbsp;|&nbsp; Düşük → deterministik</span>
-          </p>
+        <div class="roadmap-layout">
+          <div class="week-list" id="weekList"></div>
+          <article class="week-detail panel" id="weekDetail"></article>
         </div>
-        <div class="lab-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">Vanilla JS</span>
-          <span class="tag">Interactive</span>
+      </section>
+
+      <section class="studio" id="studio" aria-labelledby="studio-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="studioEyebrow">Ders studio</p>
+          <h2 id="studio-title" data-i18n="studioTitle">Her hafta teori, kod, deney ve yansıtma üretir.</h2>
         </div>
-        <a href="02-web-ngram/index.html" class="lab-link">Demo Aç →</a>
-      </div>
-    </div>
+        <div class="studio-grid">
+          <section class="panel">
+            <h3 data-i18n="promptTitle">Ders tasarım promptu</h3>
+            <p data-i18n="promptText">
+              Bu prompt ile bir haftayı daha derin modüle çevirebilir, proje görevlerini genişletebiliriz.
+            </p>
+            <textarea id="promptOutput" spellcheck="false"></textarea>
+            <button class="primary-button full-button" id="copyStudioPrompt" type="button" data-i18n="copyPromptShort">
+              Promptu kopyala
+            </button>
+          </section>
 
-    <!-- Lab 03 -->
-    <div class="lab-card reveal">
-      <div class="lab-meta">
-        <div class="lab-number">03</div>
-        <div class="lab-era era-3">Deep Learning · 2014+</div>
-        <h3 class="lab-title">PyTorch Character Model</h3>
-        <p class="lab-subtitle">03_pytorch_char_model.py</p>
-      </div>
-      <div class="lab-detail">
-        <p class="lab-desc">
-          N-gram'dan en büyük sıçrama: parametreleri saymak yerine
-          <em>gradient descent ile öğren</em>. Küçük bir GRU, karakter
-          dizilerini işleyerek dağılımı doğrudan tahmin eder.
-        </p>
-        <div class="lab-concept">
-          <p class="concept-label">Mimari</p>
-          <p class="concept-formula">
-            char_id → embedding(d) → GRU(h) → Linear → softmax<br>
-            <span>Loss: CrossEntropy &nbsp;|&nbsp; Optim: Adam</span>
-          </p>
+          <section class="panel notebook-panel">
+            <h3 data-i18n="notebookTitle">Öğrenci deney defteri</h3>
+            <label>
+              <span data-i18n="hypothesisLabel">Hipotez / Hypothesis</span>
+              <textarea id="hypothesisInput" data-placeholder-tr="Bu hafta modelin nasıl davranmasını bekliyorsun?" data-placeholder-en="What do you expect the model to do this week?"></textarea>
+            </label>
+            <label>
+              <span data-i18n="observationLabel">Gözlem / Observation</span>
+              <textarea id="observationInput" data-placeholder-tr="Deney sonucu, hata ve iyileştirme notlarını yaz." data-placeholder-en="Write experiment results, errors, and improvement notes."></textarea>
+            </label>
+            <div class="notes-actions">
+              <button class="secondary-button" id="saveNotebookButton" type="button" data-i18n="saveNotebook">Defteri kaydet</button>
+              <span id="saveState" data-i18n="localSave">Yerel tarayıcıda saklanır</span>
+            </div>
+          </section>
         </div>
-        <div class="lab-tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">GRU</span>
-          <span class="tag">Embedding</span>
-          <span class="tag">Backprop</span>
+      </section>
+
+      <section class="research" id="research" aria-labelledby="research-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="researchEyebrow">Güncel gelişmeler</p>
+          <h2 id="research-title" data-i18n="researchTitle">Ders bitince araştırma takibi yapabilecek düzeye gel.</h2>
         </div>
-        <a href="03_pytorch_char_model.py" class="lab-link">Kodu İncele →</a>
-      </div>
-    </div>
+        <div class="research-grid" id="researchGrid"></div>
+      </section>
+    </main>
 
-    <!-- Lab 04 -->
-    <div class="lab-card reveal">
-      <div class="lab-meta">
-        <div class="lab-number">04</div>
-        <div class="lab-era era-4">Transformer Era · 2017+</div>
-        <h3 class="lab-title">Minimal Transformer</h3>
-        <p class="lab-subtitle">04_minimal_transformer.py</p>
-      </div>
-      <div class="lab-detail">
-        <p class="lab-desc">
-          Causal self-attention ile donatılmış minimal bir Transformer dil modeli.
-          GRU'dan farkı: sıralı gizli durum yok, her pozisyon diğerlerine
-          doğrudan <em>attention</em> vererek bağlam kurar.
-        </p>
-        <div class="lab-concept">
-          <p class="concept-label">Mimari</p>
-          <p class="concept-formula">
-            char_id → token_emb + pos_emb<br>
-            → [Attention Block × N] → Linear → next_char<br>
-            <span>Causal mask: gelecek görünmez</span>
-          </p>
-        </div>
-        <div class="lab-tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">Self-Attention</span>
-          <span class="tag">Positional Enc.</span>
-          <span class="tag">Causal Mask</span>
-        </div>
-        <a href="04_minimal_transformer.py" class="lab-link">Kodu İncele →</a>
-      </div>
-    </div>
+    <footer class="app-footer">
+      <span>AI Evolution Lab v2</span>
+      <a href="../" data-i18n="backPortal">Ana portala dön</a>
+    </footer>
 
-  </div>
-</section>
-
-<!-- ─── EVOLUTION TIMELINE ─── -->
-<section class="evolution">
-  <p class="section-label reveal">Büyük Resim</p>
-  <h2 class="section-title reveal" style="margin-bottom: 0;">AI'nın<br>Evrimi</h2>
-
-  <div class="evo-track reveal">
-    <div class="evo-item">
-      <div class="evo-dot"></div>
-      <div class="evo-year">1956–1980s</div>
-      <div class="evo-name">Sembolik AI</div>
-      <div class="evo-desc">Kural tabanlı sistemler, uzman sistemler, mantık programlama</div>
-    </div>
-    <div class="evo-item">
-      <div class="evo-dot"></div>
-      <div class="evo-year">1980–2000s</div>
-      <div class="evo-name">İstatistiksel ML</div>
-      <div class="evo-desc">N-gram modeller, HMM, Naive Bayes, SVM — veriden öğren</div>
-    </div>
-    <div class="evo-item">
-      <div class="evo-dot"></div>
-      <div class="evo-year">2012–2017</div>
-      <div class="evo-name">Deep Learning</div>
-      <div class="evo-desc">CNN, RNN, GRU/LSTM — derin katmanlar, backprop, GPU</div>
-    </div>
-    <div class="evo-item">
-      <div class="evo-dot"></div>
-      <div class="evo-year">2017–2020</div>
-      <div class="evo-name">Transformer</div>
-      <div class="evo-desc">"Attention Is All You Need" — paralel dikkat mekanizması</div>
-    </div>
-    <div class="evo-item">
-      <div class="evo-dot"></div>
-      <div class="evo-year">2020–∞</div>
-      <div class="evo-name">LLM & Beyond</div>
-      <div class="evo-desc">GPT, BERT, Claude, Gemini — ölçek kanunu ve ortaya çıkan yetenekler</div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── REQUIREMENTS ─── -->
-<section class="section">
-  <p class="section-label reveal">Kurulum</p>
-  <h2 class="section-title reveal">Başlarken</h2>
-
-  <div class="req-grid reveal">
-    <div class="req-item">
-      <span class="req-icon">&gt;_</span>
-      <h3 class="req-title">Lab 01 — Sıfır Bağımlılık</h3>
-      <p class="req-desc">Sadece Python 3.10+. Hiçbir paket kurmanı gerekmez.</p>
-      <br>
-      <div class="code-block">
-        <span class="comment">Hemen çalıştır</span>
-        python 01_ngram_text_predictor.py
-      </div>
-    </div>
-    <div class="req-item">
-      <span class="req-icon">&#9787;</span>
-      <h3 class="req-title">Lab 02 — Web Demo</h3>
-      <p class="req-desc">Tarayıcıda çalışır. Sunucu gerekmez.</p>
-      <br>
-      <div class="code-block">
-        <span class="comment">Dosyayı tarayıcıda aç</span>
-        02-web-ngram/index.html
-      </div>
-    </div>
-    <div class="req-item">
-      <span class="req-icon">&#9670;</span>
-      <h3 class="req-title">Lab 03 & 04 — PyTorch</h3>
-      <p class="req-desc">PyTorch gerekir. requirements.txt ile kur.</p>
-      <br>
-      <div class="code-block">
-        <span class="comment">Bağımlılıkları kur</span>
-        pip install -r requirements.txt
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── FOOTER ─── -->
-<footer>
-  <div>
-    <div class="footer-brand">AI <span>Evolution</span> Lab</div>
-    <div style="margin-top: 8px; font-family: var(--mono); font-size: 10px; color: var(--muted);">
-      by ibrahimguney
-    </div>
-  </div>
-  <div class="footer-note">
-    Bu proje eğitim amaçlıdır. Hedef büyük bir model kurmak değil;
-    modern AI sistemlerinin temel fikirlerini küçük ve okunabilir
-    kodlarla anlamaktır.
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com/ibrahimguney/ai-evolution-lab" target="_blank">GitHub</a>
-    <a href="DERS_NOTLARI.md">Ders Notları</a>
-    <a href="README.md">Readme</a>
-  </div>
-</footer>
-
-<script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 4 + 'px';
-    cursor.style.top = my - 4 + 'px';
-  });
-
-  (function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx - 16 + 'px';
-    ring.style.top = ry - 16 + 'px';
-    requestAnimationFrame(animRing);
-  })();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width = '48px';
-      ring.style.height = '48px';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width = '32px';
-      ring.style.height = '32px';
-    });
-  });
-
-  // Scroll reveal
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
 </html>
