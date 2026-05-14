@@ -496,10 +496,33 @@ select:focus {
 }
 
 .compact-grid,
-.score-grid {
+.score-grid,
+.fact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.fact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fact-grid label {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8faf7;
+  padding: 8px 10px;
+  font-weight: 850;
+}
+
+.fact-grid input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: var(--accent);
 }
 
 .model-grid {
@@ -517,10 +540,27 @@ select:focus {
   padding: 6px 9px;
 }
 
-#portfolioOutput {
+#portfolioOutput,
+#week2PortfolioOutput {
   min-height: 360px;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
   font-size: 0.92rem;
+}
+
+.rule-output {
+  display: grid;
+  min-height: 190px;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8faf7;
+  padding: 12px;
+}
+
+.rule-output:empty::before {
+  content: "Run the rule system to see the explanation trace.";
+  color: var(--muted);
+  font-weight: 750;
 }
 
 .full-button {
@@ -635,7 +675,8 @@ select:focus {
   .stat-grid,
   .research-grid,
   .compact-grid,
-  .score-grid {
+  .score-grid,
+  .fact-grid {
     grid-template-columns: 1fr;
   }
 }

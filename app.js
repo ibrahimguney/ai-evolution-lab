@@ -3,6 +3,7 @@ const translations = {
     brandSub: "Yaparak yapay zeka öğrenimi",
     navRoadmap: "Yol Haritası",
     navWeek1: "1. Hafta",
+    navWeek2: "2. Hafta",
     navStudio: "Ders Studio",
     navResearch: "Güncel Takip",
     heroEyebrow: "TR/ENG çift dilli ders platformu",
@@ -37,6 +38,23 @@ const translations = {
     portfolioDraftTitle: "Portfolyo çıktısı",
     buildPortfolio: "Portfolyo özeti üret",
     copyPortfolio: "Kopyala",
+    week2Eyebrow: "2. hafta uygulaması",
+    week2Title: "Sembolik AI ile açıklanabilir bir expert system kur.",
+    ruleSystemTitle: "Kural tabanlı ders önerici",
+    learnerProfileLabel: "Öğrenci profili",
+    targetTrackLabel: "Hedef yol",
+    riskToleranceLabel: "Risk toleransı",
+    runRuleSystem: "Kural sistemini çalıştır",
+    ruleOutputTitle: "Açıklama izi",
+    ruleEditorTitle: "Kural seti",
+    stressTestTitle: "Kırılganlık testi",
+    stressCaseLabel: "Sistemi zorlayacak profil",
+    runStressTest: "Stres testini çalıştır",
+    week2PortfolioTitle: "2. hafta portfolyo çıktısı",
+    recommendation: "Öneri",
+    firedRules: "Çalışan kurallar",
+    missingEvidence: "Eksik kanıt",
+    fragility: "Kırılganlık notu",
     modelAnswer: "Cevap",
     scoreClarity: "Açıklık",
     scoreEvidence: "Kanıt",
@@ -74,6 +92,7 @@ const translations = {
     brandSub: "Learning AI by building",
     navRoadmap: "Roadmap",
     navWeek1: "Week 1",
+    navWeek2: "Week 2",
     navStudio: "Course Studio",
     navResearch: "Research Radar",
     heroEyebrow: "TR/ENG bilingual course platform",
@@ -108,6 +127,23 @@ const translations = {
     portfolioDraftTitle: "Portfolio artifact",
     buildPortfolio: "Build portfolio summary",
     copyPortfolio: "Copy",
+    week2Eyebrow: "Week 2 lab",
+    week2Title: "Build an explainable expert system with Symbolic AI.",
+    ruleSystemTitle: "Rule-based course recommender",
+    learnerProfileLabel: "Learner profile",
+    targetTrackLabel: "Target track",
+    riskToleranceLabel: "Risk tolerance",
+    runRuleSystem: "Run rule system",
+    ruleOutputTitle: "Explanation trace",
+    ruleEditorTitle: "Rule set",
+    stressTestTitle: "Fragility test",
+    stressCaseLabel: "Stress-test profile",
+    runStressTest: "Run stress test",
+    week2PortfolioTitle: "Week 2 portfolio artifact",
+    recommendation: "Recommendation",
+    firedRules: "Fired rules",
+    missingEvidence: "Missing evidence",
+    fragility: "Fragility note",
     modelAnswer: "Answer",
     scoreClarity: "Clarity",
     scoreEvidence: "Evidence",
@@ -504,6 +540,44 @@ const comparisonModels = [
   },
 ];
 
+const symbolicRules = [
+  {
+    id: "python-first",
+    requires: ["python"],
+    track: "ml",
+    tr: "Python bilgisi varsa önce veri, özellik ve basit model döngüsüyle ML temeli öner.",
+    en: "If Python is available, start with data, features, and a simple model loop for ML foundations.",
+  },
+  {
+    id: "math-support",
+    requires: ["math"],
+    track: "ml",
+    tr: "Matematik temeli varsa loss, gradient ve metrikleri daha formel işle.",
+    en: "If math background exists, treat loss, gradients, and metrics more formally.",
+  },
+  {
+    id: "web-product",
+    requires: ["web"],
+    track: "llm",
+    tr: "Web deneyimi varsa prompt karşılaştırma ve demo arayüzünü erken kur.",
+    en: "If web experience exists, build prompt comparison and demo UI early.",
+  },
+  {
+    id: "rag-data",
+    requires: ["data", "python"],
+    track: "rag",
+    tr: "Veri ve Python birlikte varsa chunking, retrieval ve kaynaklı cevap akışına geç.",
+    en: "If data and Python are both present, move to chunking, retrieval, and grounded answers.",
+  },
+  {
+    id: "agent-risk",
+    requires: ["explain", "research"],
+    track: "agent",
+    tr: "Agent hedefinde açıklanabilirlik ve paper okuma varsa tool sınırları ve güvenlik rubriği ekle.",
+    en: "For agent goals, if explainability and paper reading exist, add tool boundaries and a safety rubric.",
+  },
+];
+
 const starterPrompt = {
   tr: `AI Evolution Lab için TR/ENG çift dilli, proje tabanlı bir yapay zeka dersi tasarla. Her hafta kısa teori, çalışan mini proje, kodlama görevi, deney görevi, yansıtma sorusu, güncel AI takip görevi ve portfolyo çıktısı içersin. Lisans ve lisansüstü derinliklerini ayrı belirt.`,
   en: `Design a TR/ENG bilingual, project-based AI course for AI Evolution Lab. Each week should include short theory, a working mini project, coding task, experiment task, reflection question, current AI tracking task, and portfolio artifact. Separate undergraduate and graduate depth.`,
@@ -538,6 +612,19 @@ const els = {
   portfolioOutput: document.querySelector("#portfolioOutput"),
   buildPortfolioButton: document.querySelector("#buildPortfolioButton"),
   copyPortfolioButton: document.querySelector("#copyPortfolioButton"),
+  ruleProfileInput: document.querySelector("#ruleProfileInput"),
+  targetTrackSelect: document.querySelector("#targetTrackSelect"),
+  riskToleranceSelect: document.querySelector("#riskToleranceSelect"),
+  factGrid: document.querySelector("#factGrid"),
+  runRuleSystemButton: document.querySelector("#runRuleSystemButton"),
+  ruleOutput: document.querySelector("#ruleOutput"),
+  ruleEditor: document.querySelector("#ruleEditor"),
+  stressCaseInput: document.querySelector("#stressCaseInput"),
+  runStressTestButton: document.querySelector("#runStressTestButton"),
+  stressOutput: document.querySelector("#stressOutput"),
+  week2PortfolioOutput: document.querySelector("#week2PortfolioOutput"),
+  buildWeek2PortfolioButton: document.querySelector("#buildWeek2PortfolioButton"),
+  copyWeek2PortfolioButton: document.querySelector("#copyWeek2PortfolioButton"),
   copyPromptButton: document.querySelector("#copyPromptButton"),
   copyStudioPrompt: document.querySelector("#copyStudioPrompt"),
   hypothesisInput: document.querySelector("#hypothesisInput"),
@@ -551,6 +638,7 @@ const els = {
 render();
 restoreNotebook();
 restoreWeek1();
+restoreWeek2();
 
 els.langToggle.addEventListener("click", () => {
   state.lang = state.lang === "tr" ? "en" : "tr";
@@ -570,10 +658,19 @@ els.saveNotebookButton.addEventListener("click", saveNotebook);
 els.generateComparisonButton.addEventListener("click", generateComparison);
 els.buildPortfolioButton.addEventListener("click", buildPortfolio);
 els.copyPortfolioButton.addEventListener("click", copyPortfolio);
+els.runRuleSystemButton.addEventListener("click", runRuleSystem);
+els.runStressTestButton.addEventListener("click", runStressTest);
+els.buildWeek2PortfolioButton.addEventListener("click", buildWeek2Portfolio);
+els.copyWeek2PortfolioButton.addEventListener("click", () => copyText(els.week2PortfolioOutput.value));
 [els.learnerGoalInput, els.backgroundInput, els.timeInput, els.capstoneSelect, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
   input.addEventListener("input", saveWeek1);
   input.addEventListener("change", saveWeek1);
 });
+[els.ruleProfileInput, els.targetTrackSelect, els.riskToleranceSelect, els.ruleEditor, els.stressCaseInput].forEach((input) => {
+  input.addEventListener("input", saveWeek2);
+  input.addEventListener("change", saveWeek2);
+});
+els.factGrid.querySelectorAll("input").forEach((input) => input.addEventListener("change", saveWeek2));
 
 function render() {
   document.documentElement.lang = state.lang;
@@ -600,6 +697,10 @@ function renderTranslations() {
   [els.learnerGoalInput, els.backgroundInput, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
+  [els.ruleProfileInput, els.stressCaseInput].forEach((input) => {
+    input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
+  });
+  renderRuleEditor();
 }
 
 function renderWeeks() {
@@ -892,10 +993,148 @@ function restoreModelScores() {
 }
 
 async function copyPortfolio() {
+  await copyText(els.portfolioOutput.value, els.portfolioOutput);
+}
+
+function renderRuleEditor() {
+  const existing = els.ruleEditor.value.trim();
+  if (existing && localStorage.getItem("ai-evolution-week2")) return;
+  els.ruleEditor.value = symbolicRules.map((rule) => `${rule.id}: ${rule[state.lang]}`).join("\n");
+}
+
+function selectedFacts() {
+  return Array.from(els.factGrid.querySelectorAll("input:checked")).map((input) => input.value);
+}
+
+function evaluateRuleSystem(profileText = els.ruleProfileInput.value) {
+  const dict = translations[state.lang];
+  const facts = selectedFacts();
+  const track = els.targetTrackSelect.value;
+  const fired = symbolicRules.filter((rule) => {
+    const trackMatches = rule.track === track || (track === "llm" && rule.track === "ml");
+    return trackMatches && rule.requires.every((fact) => facts.includes(fact));
+  });
+  const missing = symbolicRules
+    .filter((rule) => rule.track === track)
+    .flatMap((rule) => rule.requires)
+    .filter((fact) => !facts.includes(fact));
+  const uniqueMissing = Array.from(new Set(missing));
+  const risk = els.riskToleranceSelect.value;
+  const recommendation = buildRuleRecommendation(track, facts, risk, profileText);
+
+  return {
+    recommendation,
+    fired,
+    missing: uniqueMissing,
+    fragility:
+      state.lang === "tr"
+        ? "Bu sistem yalnızca seçilen fact ve kuralları görür. Profil metnindeki belirsizlikleri anlayamaz; yeni durumlar için kural eklemek gerekir."
+        : "This system only sees selected facts and rules. It cannot understand ambiguities in the profile text; new cases require new rules.",
+    dict,
+  };
+}
+
+function buildRuleRecommendation(track, facts, risk, profileText) {
+  const has = (fact) => facts.includes(fact);
+  const base = {
+    ml: state.lang === "tr" ? "ML temelleri: veri, özellik, train/test ve metrik akışıyla başla." : "ML foundations: start with data, features, train/test, and metrics.",
+    llm: state.lang === "tr" ? "LLM mühendisliği: prompt tasarımı, değerlendirme rubriği ve küçük demo arayüzü kur." : "LLM engineering: build prompt design, evaluation rubric, and a small demo UI.",
+    rag: state.lang === "tr" ? "RAG sistemleri: doküman parçalama, retrieval ve kaynaklı cevap akışı kur." : "RAG systems: build document chunking, retrieval, and grounded answer flow.",
+    agent: state.lang === "tr" ? "Agent sistemleri: planlama, tool seçimi, sınırlar ve insan denetimiyle ilerle." : "Agent systems: work on planning, tool choice, boundaries, and human oversight.",
+  }[track];
+  const warnings = [];
+  if (!has("python")) warnings.push(state.lang === "tr" ? "Python eksikse önce küçük script ve veri okuma pratiği ekle." : "If Python is missing, add small scripting and data-reading practice first.");
+  if ((track === "rag" || track === "agent") && !has("explain")) warnings.push(state.lang === "tr" ? "Açıklanabilirlik fact'i yoksa güvenlik ve hata analizi zayıf kalır." : "Without explainability, safety and error analysis will be weak.");
+  if (risk === "high") warnings.push(state.lang === "tr" ? "Yüksek risk toleransı seçildi: deploy öncesi ekstra test rubriği zorunlu olsun." : "High risk tolerance selected: require an extra test rubric before deployment.");
+  if (profileText.toLocaleLowerCase("tr-TR").includes("hızlı") || profileText.toLowerCase().includes("fast")) warnings.push(state.lang === "tr" ? "Profil hızlı sonuç istiyor; kapsamı küçük tut." : "The profile asks for speed; keep scope small.");
+  return [base, ...warnings].join(" ");
+}
+
+function runRuleSystem() {
+  const result = evaluateRuleSystem();
+  els.ruleOutput.innerHTML = renderRuleResult(result);
+  saveWeek2();
+}
+
+function runStressTest() {
+  const result = evaluateRuleSystem(els.stressCaseInput.value);
+  const stressNote =
+    state.lang === "tr"
+      ? "Stres testi yorumu: Profil metnindeki istekler fact seçimleriyle çelişirse sembolik sistem bunu otomatik çözemez. Kural tabanı ya yeni fact ister ya da yanlış güven üretir."
+      : "Stress-test note: If profile text conflicts with selected facts, the symbolic system cannot resolve it automatically. The rule base needs new facts or it may produce false confidence.";
+  els.stressOutput.innerHTML = `${renderRuleResult(result)}<div class="level-note">${escapeHtml(stressNote)}</div>`;
+  saveWeek2();
+}
+
+function renderRuleResult(result) {
+  return `
+    <div class="detail-block">
+      <h4>${result.dict.recommendation}</h4>
+      <p>${escapeHtml(result.recommendation)}</p>
+    </div>
+    <div class="detail-block">
+      <h4>${result.dict.firedRules}</h4>
+      <ul>${(result.fired.length ? result.fired : [{ id: "-", [state.lang]: state.lang === "tr" ? "Hiçbir güçlü kural çalışmadı." : "No strong rule fired." }]).map((rule) => `<li><strong>${escapeHtml(rule.id)}</strong> - ${escapeHtml(rule[state.lang])}</li>`).join("")}</ul>
+    </div>
+    <div class="detail-block">
+      <h4>${result.dict.missingEvidence}</h4>
+      <p>${escapeHtml(result.missing.join(", ") || "-")}</p>
+    </div>
+    <div class="detail-block">
+      <h4>${result.dict.fragility}</h4>
+      <p>${escapeHtml(result.fragility)}</p>
+    </div>
+  `;
+}
+
+function buildWeek2Portfolio() {
+  const result = evaluateRuleSystem();
+  const fired = result.fired.map((rule) => rule.id).join(", ") || "-";
+  els.week2PortfolioOutput.value =
+    state.lang === "tr"
+      ? `# AI Evolution Lab - 2. Hafta Portfolyo Çıktısı\n\n## Mini Expert System\nHedef yol: ${els.targetTrackSelect.value}\nRisk toleransı: ${els.riskToleranceSelect.value}\nSeçilen fact'ler: ${selectedFacts().join(", ") || "-"}\n\n## Öğrenci Profili\n${els.ruleProfileInput.value || "-"}\n\n## Sistem Önerisi\n${result.recommendation}\n\n## Açıklama İzi\nÇalışan kurallar: ${fired}\nEksik kanıt: ${result.missing.join(", ") || "-"}\n\n## Kırılganlık Testi\n${els.stressCaseInput.value || "-"}\n\n## Yansıtma\nSembolik AI açıklanabilir ve kontrol edilebilir; fakat yeni, belirsiz veya çelişkili durumlarda kural tabanı hızla kırılganlaşır.`
+      : `# AI Evolution Lab - Week 2 Portfolio Artifact\n\n## Mini Expert System\nTarget track: ${els.targetTrackSelect.value}\nRisk tolerance: ${els.riskToleranceSelect.value}\nSelected facts: ${selectedFacts().join(", ") || "-"}\n\n## Learner Profile\n${els.ruleProfileInput.value || "-"}\n\n## System Recommendation\n${result.recommendation}\n\n## Explanation Trace\nFired rules: ${fired}\nMissing evidence: ${result.missing.join(", ") || "-"}\n\n## Fragility Test\n${els.stressCaseInput.value || "-"}\n\n## Reflection\nSymbolic AI is explainable and controllable, but new, ambiguous, or conflicting cases make the rule base brittle quickly.`;
+  saveWeek2();
+  showToast(translations[state.lang].saved);
+}
+
+function saveWeek2() {
+  localStorage.setItem(
+    "ai-evolution-week2",
+    JSON.stringify({
+      profile: els.ruleProfileInput.value,
+      track: els.targetTrackSelect.value,
+      risk: els.riskToleranceSelect.value,
+      facts: selectedFacts(),
+      rules: els.ruleEditor.value,
+      ruleOutput: els.ruleOutput.innerHTML,
+      stressCase: els.stressCaseInput.value,
+      stressOutput: els.stressOutput.innerHTML,
+      portfolio: els.week2PortfolioOutput.value,
+    }),
+  );
+}
+
+function restoreWeek2() {
+  const saved = JSON.parse(localStorage.getItem("ai-evolution-week2") || "{}");
+  els.ruleProfileInput.value = saved.profile || "";
+  els.targetTrackSelect.value = saved.track || "ml";
+  els.riskToleranceSelect.value = saved.risk || "low";
+  els.factGrid.querySelectorAll("input").forEach((input) => {
+    input.checked = saved.facts ? saved.facts.includes(input.value) : input.checked;
+  });
+  els.ruleEditor.value = saved.rules || els.ruleEditor.value;
+  els.ruleOutput.innerHTML = saved.ruleOutput || "";
+  els.stressCaseInput.value = saved.stressCase || "";
+  els.stressOutput.innerHTML = saved.stressOutput || "";
+  els.week2PortfolioOutput.value = saved.portfolio || "";
+}
+
+async function copyText(text, fallbackElement = null) {
   if (navigator.clipboard) {
-    await navigator.clipboard.writeText(els.portfolioOutput.value);
-  } else {
-    els.portfolioOutput.select();
+    await navigator.clipboard.writeText(text);
+  } else if (fallbackElement) {
+    fallbackElement.select();
     document.execCommand("copy");
   }
   showToast(translations[state.lang].copied);

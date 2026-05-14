@@ -23,6 +23,7 @@
       <nav aria-label="Course sections">
         <a href="#roadmap" data-i18n="navRoadmap">Yol Haritası</a>
         <a href="#week1" data-i18n="navWeek1">1. Hafta</a>
+        <a href="#week2" data-i18n="navWeek2">2. Hafta</a>
         <a href="#studio" data-i18n="navStudio">Ders Studio</a>
         <a href="#research" data-i18n="navResearch">Güncel Takip</a>
       </nav>
@@ -153,6 +154,83 @@
             <div class="notes-actions">
               <button class="primary-button" id="buildPortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
               <button class="secondary-button" id="copyPortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="week-lab" id="week2" aria-labelledby="week2-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="week2Eyebrow">2. hafta uygulaması</p>
+          <h2 id="week2-title" data-i18n="week2Title">Sembolik AI ile açıklanabilir bir expert system kur.</h2>
+        </div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="ruleSystemTitle">Kural tabanlı ders önerici</h3>
+            <label>
+              <span data-i18n="learnerProfileLabel">Öğrenci profili</span>
+              <textarea id="ruleProfileInput" data-placeholder-tr="Örn: Python biliyor, matematik temeli orta, web arayüzü geliştirmek istiyor, RAG projesi hedefliyor." data-placeholder-en="Example: Knows Python, has intermediate math, wants to build web interfaces, targets a RAG project."></textarea>
+            </label>
+            <div class="compact-grid">
+              <label>
+                <span data-i18n="targetTrackLabel">Hedef yol</span>
+                <select id="targetTrackSelect">
+                  <option value="ml">ML foundations</option>
+                  <option value="llm">LLM engineering</option>
+                  <option value="rag">RAG systems</option>
+                  <option value="agent">Agent systems</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="riskToleranceLabel">Risk toleransı</span>
+                <select id="riskToleranceSelect">
+                  <option value="low">Low / Düşük</option>
+                  <option value="medium">Medium / Orta</option>
+                  <option value="high">High / Yüksek</option>
+                </select>
+              </label>
+            </div>
+            <div class="fact-grid" id="factGrid">
+              <label><input type="checkbox" value="python" checked /> Python</label>
+              <label><input type="checkbox" value="math" /> Math</label>
+              <label><input type="checkbox" value="web" checked /> Web</label>
+              <label><input type="checkbox" value="data" /> Data</label>
+              <label><input type="checkbox" value="explain" checked /> Explainability</label>
+              <label><input type="checkbox" value="research" /> Paper reading</label>
+            </div>
+            <button class="primary-button full-button" id="runRuleSystemButton" type="button" data-i18n="runRuleSystem">
+              Kural sistemini çalıştır
+            </button>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="ruleOutputTitle">Açıklama izi</h3>
+            <div class="rule-output" id="ruleOutput"></div>
+            <h3 data-i18n="ruleEditorTitle">Kural seti</h3>
+            <textarea id="ruleEditor" spellcheck="false"></textarea>
+          </section>
+        </div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="stressTestTitle">Kırılganlık testi</h3>
+            <label>
+              <span data-i18n="stressCaseLabel">Sistemi zorlayacak profil</span>
+              <textarea id="stressCaseInput" data-placeholder-tr="Örn: Python bilmiyor ama iki haftada agent sistemi yapmak istiyor; kaynak doğrulaması istemiyor." data-placeholder-en="Example: Does not know Python but wants to build an agent system in two weeks; does not want source verification."></textarea>
+            </label>
+            <button class="secondary-button full-button" id="runStressTestButton" type="button" data-i18n="runStressTest">
+              Stres testini çalıştır
+            </button>
+            <div class="rule-output" id="stressOutput"></div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="week2PortfolioTitle">2. hafta portfolyo çıktısı</h3>
+            <textarea id="week2PortfolioOutput" spellcheck="false"></textarea>
+            <div class="notes-actions">
+              <button class="primary-button" id="buildWeek2PortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
+              <button class="secondary-button" id="copyWeek2PortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
             </div>
           </section>
         </div>
