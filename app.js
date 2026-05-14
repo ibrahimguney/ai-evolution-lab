@@ -37,7 +37,14 @@ const translations = {
     newsImpactLabel: "Derse etkisi",
     portfolioDraftTitle: "Portfolyo çıktısı",
     buildPortfolio: "Portfolyo özeti üret",
+    examplePortfolio: "Örnek doldur",
     copyPortfolio: "Kopyala",
+    readingListTitle: "Okuma listesi",
+    graduateRubricTitle: "Lisansüstü değerlendirme rubriği",
+    readingCore: "Temel",
+    readingOptional: "Derinleşme",
+    rubricExcellent: "Güçlü çalışma",
+    rubricDeveloping: "Geliştirilecek",
     week2Eyebrow: "2. hafta uygulaması",
     week2Title: "Sembolik AI ile açıklanabilir bir expert system kur.",
     ruleSystemTitle: "Kural tabanlı ders önerici",
@@ -126,7 +133,14 @@ const translations = {
     newsImpactLabel: "Course impact",
     portfolioDraftTitle: "Portfolio artifact",
     buildPortfolio: "Build portfolio summary",
+    examplePortfolio: "Fill example",
     copyPortfolio: "Copy",
+    readingListTitle: "Reading list",
+    graduateRubricTitle: "Graduate assessment rubric",
+    readingCore: "Core",
+    readingOptional: "Deepening",
+    rubricExcellent: "Strong work",
+    rubricDeveloping: "Needs development",
     week2Eyebrow: "Week 2 lab",
     week2Title: "Build an explainable expert system with Symbolic AI.",
     ruleSystemTitle: "Rule-based course recommender",
@@ -540,6 +554,104 @@ const comparisonModels = [
   },
 ];
 
+const week1Readings = [
+  {
+    type: "core",
+    tr: {
+      title: "Alan haritası: AI, ML, DL, LLM, RAG, Agent",
+      task: "Her kavram için bir cümlelik tanım ve bir kullanım örneği yaz.",
+    },
+    en: {
+      title: "Field map: AI, ML, DL, LLM, RAG, Agent",
+      task: "Write a one-sentence definition and one use case for each concept.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "Model kartı okuma pratiği",
+      task: "Bir model kartında veri, kullanım sınırı, risk ve değerlendirme bölümlerini işaretle.",
+    },
+    en: {
+      title: "Model card reading practice",
+      task: "Mark the data, usage limits, risk, and evaluation sections in one model card.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "Benchmark okuryazarlığı",
+      task: "Bir benchmark sonucunda metriğin neyi ölçtüğünü ve neyi ölçmediğini not et.",
+    },
+    en: {
+      title: "Benchmark literacy",
+      task: "Note what one benchmark metric measures and what it does not measure.",
+    },
+  },
+  {
+    type: "optional",
+    tr: {
+      title: "Araştırma özeti okuma",
+      task: "Yeni bir paper özeti seç; iddia, yöntem, veri ve sınırlılık başlıklarıyla 150 kelime yaz.",
+    },
+    en: {
+      title: "Research abstract reading",
+      task: "Choose a recent paper abstract; write 150 words covering claim, method, data, and limitation.",
+    },
+  },
+];
+
+const week1Rubric = [
+  {
+    tr: {
+      criterion: "Kavram ayrımı",
+      strong: "AI, ML, DL, LLM, RAG ve agent kavramlarını ilişkileriyle ayırır.",
+      weak: "Kavramları liste halinde verir ama sınırlarını karıştırır.",
+    },
+    en: {
+      criterion: "Concept separation",
+      strong: "Distinguishes AI, ML, DL, LLM, RAG, and agents with relationships.",
+      weak: "Lists concepts but confuses their boundaries.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Epistemik güven",
+      strong: "Cevabı kanıt, kaynak, belirsizlik ve risk üzerinden değerlendirir.",
+      weak: "Cevabı yalnızca akıcı veya ikna edici olmasına göre değerlendirir.",
+    },
+    en: {
+      criterion: "Epistemic trust",
+      strong: "Evaluates answers through evidence, sources, uncertainty, and risk.",
+      weak: "Evaluates answers only by fluency or persuasiveness.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Deney tasarımı",
+      strong: "Karşılaştırma sorusu, rubrik ve gözlem notu tekrar edilebilir biçimdedir.",
+      weak: "Deney kişisel izlenime dayanır; ölçütleri açık değildir.",
+    },
+    en: {
+      criterion: "Experiment design",
+      strong: "Comparison question, rubric, and observations are reproducible.",
+      weak: "Experiment depends on personal impressions; criteria are unclear.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Portfolyo niteliği",
+      strong: "Hedef, arka plan, model karşılaştırması, güncel takip ve yansıtma tutarlı bir anlatı oluşturur.",
+      weak: "Alanlar doldurulmuştur ama öğrenme hikayesi ve karar gerekçesi zayıftır.",
+    },
+    en: {
+      criterion: "Portfolio quality",
+      strong: "Goal, background, model comparison, current tracking, and reflection form a coherent story.",
+      weak: "Fields are filled but the learning story and decision rationale are weak.",
+    },
+  },
+];
+
 const symbolicRules = [
   {
     id: "python-first",
@@ -606,11 +718,14 @@ const els = {
   comparisonPromptInput: document.querySelector("#comparisonPromptInput"),
   generateComparisonButton: document.querySelector("#generateComparisonButton"),
   modelComparisonGrid: document.querySelector("#modelComparisonGrid"),
+  week1ReadingList: document.querySelector("#week1ReadingList"),
+  week1RubricList: document.querySelector("#week1RubricList"),
   newsSourceInput: document.querySelector("#newsSourceInput"),
   newsClaimInput: document.querySelector("#newsClaimInput"),
   newsImpactInput: document.querySelector("#newsImpactInput"),
   portfolioOutput: document.querySelector("#portfolioOutput"),
   buildPortfolioButton: document.querySelector("#buildPortfolioButton"),
+  examplePortfolioButton: document.querySelector("#examplePortfolioButton"),
   copyPortfolioButton: document.querySelector("#copyPortfolioButton"),
   ruleProfileInput: document.querySelector("#ruleProfileInput"),
   targetTrackSelect: document.querySelector("#targetTrackSelect"),
@@ -657,6 +772,7 @@ els.copyStudioPrompt.addEventListener("click", copyPrompt);
 els.saveNotebookButton.addEventListener("click", saveNotebook);
 els.generateComparisonButton.addEventListener("click", generateComparison);
 els.buildPortfolioButton.addEventListener("click", buildPortfolio);
+els.examplePortfolioButton.addEventListener("click", fillExamplePortfolio);
 els.copyPortfolioButton.addEventListener("click", copyPortfolio);
 els.runRuleSystemButton.addEventListener("click", runRuleSystem);
 els.runStressTestButton.addEventListener("click", runStressTest);
@@ -678,6 +794,7 @@ function render() {
   renderWeeks();
   renderWeekDetail();
   renderResearch();
+  renderWeek1Academic();
   renderComparisonGrid();
   renderProgress();
   updatePrompt();
@@ -798,6 +915,36 @@ function renderResearch() {
     .join("");
 }
 
+function renderWeek1Academic() {
+  const dict = translations[state.lang];
+  els.week1ReadingList.innerHTML = week1Readings
+    .map((item) => {
+      const content = item[state.lang];
+      const label = item.type === "core" ? dict.readingCore : dict.readingOptional;
+      return `
+        <article class="resource-item">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(content.title)}</strong>
+          <p>${escapeHtml(content.task)}</p>
+        </article>
+      `;
+    })
+    .join("");
+
+  els.week1RubricList.innerHTML = week1Rubric
+    .map((item) => {
+      const content = item[state.lang];
+      return `
+        <article class="rubric-item">
+          <h4>${escapeHtml(content.criterion)}</h4>
+          <p><strong>${escapeHtml(dict.rubricExcellent)}:</strong> ${escapeHtml(content.strong)}</p>
+          <p><strong>${escapeHtml(dict.rubricDeveloping)}:</strong> ${escapeHtml(content.weak)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
 function renderComparisonGrid() {
   const dict = translations[state.lang];
   els.modelComparisonGrid.innerHTML = comparisonModels
@@ -887,6 +1034,58 @@ function buildPortfolio() {
       : `# AI Evolution Lab - Week 1 Portfolio Artifact\n\n## Learning Contract\nGoal: ${els.learnerGoalInput.value || "-"}\nCurrent background: ${els.backgroundInput.value || "-"}\nWeekly time: ${els.timeInput.value || "-"} hours\nFinal project direction: ${els.capstoneSelect.value}\n\n## First Model Comparison\nTest question: ${els.comparisonPromptInput.value || "-"}\n${modelSummaries}\n\n## Current AI Tracking Log\nSource / title: ${els.newsSourceInput.value || "-"}\nMain claim: ${els.newsClaimInput.value || "-"}\nCourse impact: ${els.newsImpactInput.value || "-"}\n\n## Short Reflection\nThis week I learned to evaluate AI outputs beyond fluent text: evidence, limitations, risk, and actionability matter.`;
   saveWeek1();
   showToast(dict.saved);
+}
+
+function fillExamplePortfolio() {
+  els.learnerGoalInput.value =
+    state.lang === "tr"
+      ? "12 hafta sonunda kaynak gösteren, değerlendirme rubriği olan küçük bir RAG ders asistanı geliştirmek istiyorum."
+      : "By the end of 12 weeks, I want to build a sourced RAG course assistant with an evaluation rubric.";
+  els.backgroundInput.value =
+    state.lang === "tr"
+      ? "Python ve temel web bilgim var. Makine öğrenmesi kavramlarını biliyorum ama model değerlendirme ve RAG konusunda sistematik pratiğe ihtiyacım var."
+      : "I know Python and basic web development. I understand machine learning concepts, but I need systematic practice in model evaluation and RAG.";
+  els.timeInput.value = "7";
+  els.capstoneSelect.value = "rag";
+  els.comparisonPromptInput.value =
+    state.lang === "tr"
+      ? "Bir öğrenciye overfitting kavramını nasıl öğretirsin?"
+      : "How would you teach overfitting to a student?";
+  generateComparison();
+
+  const scorePlan = {
+    "baseline:clarity": 4,
+    "baseline:evidence": 2,
+    "baseline:action": 3,
+    "baseline:risk": 2,
+    "tutor:clarity": 5,
+    "tutor:evidence": 3,
+    "tutor:action": 5,
+    "tutor:risk": 3,
+    "research:clarity": 4,
+    "research:evidence": 5,
+    "research:action": 4,
+    "research:risk": 5,
+  };
+
+  Object.entries(scorePlan).forEach(([key, value]) => {
+    const select = document.querySelector(`[data-score="${key}"]`);
+    if (select) select.value = String(value);
+  });
+
+  els.newsSourceInput.value =
+    state.lang === "tr" ? "Yeni bir LLM duyurusu veya model kartı" : "A recent LLM release or model card";
+  els.newsClaimInput.value =
+    state.lang === "tr"
+      ? "Model daha uzun bağlam ve daha iyi muhakeme iddia ediyor; bunu benchmark sonuçları ve kullanım sınırlarıyla doğrulamak gerekir."
+      : "The model claims longer context and better reasoning; this should be checked against benchmark results and usage limits.";
+  els.newsImpactInput.value =
+    state.lang === "tr"
+      ? "Final RAG projemde model seçimini yalnızca popülerliğe göre değil, kaynak doğruluğu, maliyet ve gecikmeye göre yapmam gerektiğini gösteriyor."
+      : "For my final RAG project, it shows that model choice should depend on citation quality, cost, and latency, not popularity alone.";
+
+  updateScores();
+  buildPortfolio();
 }
 
 function renderProgress() {
