@@ -652,6 +652,104 @@ const week1Rubric = [
   },
 ];
 
+const week2Readings = [
+  {
+    type: "core",
+    tr: {
+      title: "Sembolik AI ve kural tabanlı akıl yürütme",
+      task: "Kural, fact, inference ve explanation trace kavramlarını birer örnekle açıkla.",
+    },
+    en: {
+      title: "Symbolic AI and rule-based reasoning",
+      task: "Explain rule, fact, inference, and explanation trace with one example each.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "Expert system tasarım notu",
+      task: "Bir uzman sistemde bilgi tabanı, çıkarım motoru ve kullanıcı girdisi ayrımını çiz.",
+    },
+    en: {
+      title: "Expert system design note",
+      task: "Diagram knowledge base, inference engine, and user input in an expert system.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "Açıklanabilirlik ve kırılganlık",
+      task: "Açıklanabilir bir sistemin hangi durumda yine de yanlış karar verebileceğini yaz.",
+    },
+    en: {
+      title: "Explainability and brittleness",
+      task: "Write when an explainable system can still make a wrong decision.",
+    },
+  },
+  {
+    type: "optional",
+    tr: {
+      title: "Kural tabanlı sistemlerden modern guardrail tasarımına",
+      task: "Bugünkü AI guardrail yaklaşımlarında sembolik kuralların nerede kullanıldığını araştır.",
+    },
+    en: {
+      title: "From rule-based systems to modern guardrail design",
+      task: "Research where symbolic rules appear in modern AI guardrail approaches.",
+    },
+  },
+];
+
+const week2Rubric = [
+  {
+    tr: {
+      criterion: "Kural/fact ayrımı",
+      strong: "Fact, kural ve öneri ayrımını net kurar; açıklama izini takip edilebilir yapar.",
+      weak: "Kural ile kullanıcı girdisini karıştırır; öneri gerekçesi belirsiz kalır.",
+    },
+    en: {
+      criterion: "Rule/fact separation",
+      strong: "Clearly separates facts, rules, and recommendations; explanation trace is followable.",
+      weak: "Confuses rules with user input; recommendation rationale remains unclear.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Çıkarım kalitesi",
+      strong: "Kurallar hedef yol, ön koşul ve risk toleransıyla tutarlı çalışır.",
+      weak: "Kurallar rastgele tetiklenir veya hedef yol ile ilişki zayıftır.",
+    },
+    en: {
+      criterion: "Inference quality",
+      strong: "Rules align with target track, prerequisites, and risk tolerance.",
+      weak: "Rules fire randomly or have weak relation to the target track.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Kırılganlık analizi",
+      strong: "Sistemin hangi belirsiz/çelişkili profillerde bozulduğunu açıkça gösterir.",
+      weak: "Sistemin sınırlarını yalnızca genel cümlelerle açıklar.",
+    },
+    en: {
+      criterion: "Fragility analysis",
+      strong: "Clearly shows which ambiguous or conflicting profiles break the system.",
+      weak: "Explains system limits only in generic terms.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Modern AI bağlantısı",
+      strong: "Sembolik AI’ı açıklanabilirlik, guardrail ve agent tool sınırlarıyla ilişkilendirir.",
+      weak: "Sembolik AI’ı tarihsel bilgi olarak bırakır; modern kullanımla bağ kurmaz.",
+    },
+    en: {
+      criterion: "Modern AI connection",
+      strong: "Connects Symbolic AI to explainability, guardrails, and agent tool boundaries.",
+      weak: "Leaves Symbolic AI as historical knowledge without modern connection.",
+    },
+  },
+];
+
 const symbolicRules = [
   {
     id: "python-first",
@@ -728,6 +826,8 @@ const els = {
   examplePortfolioButton: document.querySelector("#examplePortfolioButton"),
   copyPortfolioButton: document.querySelector("#copyPortfolioButton"),
   ruleProfileInput: document.querySelector("#ruleProfileInput"),
+  week2ReadingList: document.querySelector("#week2ReadingList"),
+  week2RubricList: document.querySelector("#week2RubricList"),
   targetTrackSelect: document.querySelector("#targetTrackSelect"),
   riskToleranceSelect: document.querySelector("#riskToleranceSelect"),
   factGrid: document.querySelector("#factGrid"),
@@ -739,6 +839,7 @@ const els = {
   stressOutput: document.querySelector("#stressOutput"),
   week2PortfolioOutput: document.querySelector("#week2PortfolioOutput"),
   buildWeek2PortfolioButton: document.querySelector("#buildWeek2PortfolioButton"),
+  exampleWeek2Button: document.querySelector("#exampleWeek2Button"),
   copyWeek2PortfolioButton: document.querySelector("#copyWeek2PortfolioButton"),
   copyPromptButton: document.querySelector("#copyPromptButton"),
   copyStudioPrompt: document.querySelector("#copyStudioPrompt"),
@@ -777,6 +878,7 @@ els.copyPortfolioButton.addEventListener("click", copyPortfolio);
 els.runRuleSystemButton.addEventListener("click", runRuleSystem);
 els.runStressTestButton.addEventListener("click", runStressTest);
 els.buildWeek2PortfolioButton.addEventListener("click", buildWeek2Portfolio);
+els.exampleWeek2Button.addEventListener("click", fillExampleWeek2);
 els.copyWeek2PortfolioButton.addEventListener("click", () => copyText(els.week2PortfolioOutput.value));
 [els.learnerGoalInput, els.backgroundInput, els.timeInput, els.capstoneSelect, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
   input.addEventListener("input", saveWeek1);
@@ -795,6 +897,7 @@ function render() {
   renderWeekDetail();
   renderResearch();
   renderWeek1Academic();
+  renderWeek2Academic();
   renderComparisonGrid();
   renderProgress();
   updatePrompt();
@@ -932,6 +1035,36 @@ function renderWeek1Academic() {
     .join("");
 
   els.week1RubricList.innerHTML = week1Rubric
+    .map((item) => {
+      const content = item[state.lang];
+      return `
+        <article class="rubric-item">
+          <h4>${escapeHtml(content.criterion)}</h4>
+          <p><strong>${escapeHtml(dict.rubricExcellent)}:</strong> ${escapeHtml(content.strong)}</p>
+          <p><strong>${escapeHtml(dict.rubricDeveloping)}:</strong> ${escapeHtml(content.weak)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderWeek2Academic() {
+  const dict = translations[state.lang];
+  els.week2ReadingList.innerHTML = week2Readings
+    .map((item) => {
+      const content = item[state.lang];
+      const label = item.type === "core" ? dict.readingCore : dict.readingOptional;
+      return `
+        <article class="resource-item">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(content.title)}</strong>
+          <p>${escapeHtml(content.task)}</p>
+        </article>
+      `;
+    })
+    .join("");
+
+  els.week2RubricList.innerHTML = week2Rubric
     .map((item) => {
       const content = item[state.lang];
       return `
@@ -1295,6 +1428,26 @@ function buildWeek2Portfolio() {
       : `# AI Evolution Lab - Week 2 Portfolio Artifact\n\n## Mini Expert System\nTarget track: ${els.targetTrackSelect.value}\nRisk tolerance: ${els.riskToleranceSelect.value}\nSelected facts: ${selectedFacts().join(", ") || "-"}\n\n## Learner Profile\n${els.ruleProfileInput.value || "-"}\n\n## System Recommendation\n${result.recommendation}\n\n## Explanation Trace\nFired rules: ${fired}\nMissing evidence: ${result.missing.join(", ") || "-"}\n\n## Fragility Test\n${els.stressCaseInput.value || "-"}\n\n## Reflection\nSymbolic AI is explainable and controllable, but new, ambiguous, or conflicting cases make the rule base brittle quickly.`;
   saveWeek2();
   showToast(translations[state.lang].saved);
+}
+
+function fillExampleWeek2() {
+  els.ruleProfileInput.value =
+    state.lang === "tr"
+      ? "Python ve temel web bilgisi var. Matematik temeli orta. Final projesi olarak kaynak gösteren bir RAG ders asistanı yapmak istiyor. Açıklanabilirlik ve düşük risk önemli."
+      : "Knows Python and basic web development. Has intermediate math. Wants to build a sourced RAG course assistant as a final project. Explainability and low risk matter.";
+  els.targetTrackSelect.value = "rag";
+  els.riskToleranceSelect.value = "low";
+  const facts = ["python", "web", "data", "explain", "research"];
+  els.factGrid.querySelectorAll("input").forEach((input) => {
+    input.checked = facts.includes(input.value);
+  });
+  els.stressCaseInput.value =
+    state.lang === "tr"
+      ? "Python bilmiyor, veri kaynağı yok, ama bir haftada otonom agent yayınlamak istiyor ve kaynak doğrulaması istemiyor."
+      : "Does not know Python, has no data source, but wants to deploy an autonomous agent in one week and does not want source verification.";
+  runRuleSystem();
+  runStressTest();
+  buildWeek2Portfolio();
 }
 
 function saveWeek2() {
