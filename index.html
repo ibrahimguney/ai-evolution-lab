@@ -24,6 +24,7 @@
         <a href="#roadmap" data-i18n="navRoadmap">Yol Haritası</a>
         <a href="#week1" data-i18n="navWeek1">1. Hafta</a>
         <a href="#week2" data-i18n="navWeek2">2. Hafta</a>
+        <a href="#week3" data-i18n="navWeek3">3. Hafta</a>
         <a href="#studio" data-i18n="navStudio">Ders Studio</a>
         <a href="#research" data-i18n="navResearch">Güncel Takip</a>
       </nav>
@@ -260,6 +261,89 @@
             </div>
           </section>
         </div>
+      </section>
+
+      <section class="week-lab" id="week3" aria-labelledby="week3-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="week3Eyebrow">3. hafta uygulaması</p>
+          <h2 id="week3-title" data-i18n="week3Title">N-gram ile next-token prediction deneyini kur.</h2>
+        </div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="ngramTrainerTitle">N-gram eğitim alanı</h3>
+            <label>
+              <span data-i18n="trainingTextLabel">Eğitim metni</span>
+              <textarea id="ngramTrainingInput" spellcheck="false"></textarea>
+            </label>
+            <div class="compact-grid">
+              <label>
+                <span data-i18n="nValueLabel">n değeri</span>
+                <input id="ngramNInput" type="number" min="2" max="8" value="4" />
+              </label>
+              <label>
+                <span data-i18n="temperatureLabel">Temperature</span>
+                <input id="ngramTemperatureInput" type="number" min="0.2" max="2" step="0.1" value="0.8" />
+              </label>
+            </div>
+            <button class="primary-button full-button" id="trainNgramButton" type="button" data-i18n="trainNgram">
+              Modeli eğit
+            </button>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="generationTitle">Metin üretimi</h3>
+            <label>
+              <span data-i18n="seedTextLabel">Başlangıç metni</span>
+              <input id="ngramSeedInput" type="text" value="ai" />
+            </label>
+            <label>
+              <span data-i18n="maxLengthLabel">Maksimum karakter</span>
+              <input id="ngramMaxInput" type="number" min="20" max="240" value="90" />
+            </label>
+            <button class="secondary-button full-button" id="generateNgramButton" type="button" data-i18n="generateNgram">
+              Metin üret
+            </button>
+            <output class="text-output" id="ngramOutput"></output>
+          </section>
+        </div>
+
+        <div class="academic-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="probabilityTitle">Olasılık tablosu</h3>
+            <div class="rule-output" id="ngramProbabilityOutput"></div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="experimentLogTitle">Deney notu</h3>
+            <label>
+              <span data-i18n="experimentObservationLabel">n ve temperature değişince ne oldu?</span>
+              <textarea id="ngramObservationInput" data-placeholder-tr="n=2, n=4, n=6 ve farklı temperature değerlerinde çıktı kalitesi nasıl değişti?" data-placeholder-en="How did output quality change for n=2, n=4, n=6 and different temperature values?"></textarea>
+            </label>
+          </section>
+        </div>
+
+        <div class="academic-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="readingListTitle">Okuma listesi</h3>
+            <div class="resource-list" id="week3ReadingList"></div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="graduateRubricTitle">Lisansüstü değerlendirme rubriği</h3>
+            <div class="rubric-list" id="week3RubricList"></div>
+          </section>
+        </div>
+
+        <section class="panel lab-panel">
+          <h3 data-i18n="week3PortfolioTitle">3. hafta portfolyo çıktısı</h3>
+          <textarea id="week3PortfolioOutput" spellcheck="false"></textarea>
+          <div class="notes-actions">
+            <button class="primary-button" id="buildWeek3PortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
+            <button class="secondary-button" id="exampleWeek3Button" type="button" data-i18n="examplePortfolio">Örnek doldur</button>
+            <button class="secondary-button" id="copyWeek3PortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
+          </div>
+        </section>
       </section>
 
       <section class="studio" id="studio" aria-labelledby="studio-title">

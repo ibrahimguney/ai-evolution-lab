@@ -4,6 +4,7 @@ const translations = {
     navRoadmap: "Yol Haritası",
     navWeek1: "1. Hafta",
     navWeek2: "2. Hafta",
+    navWeek3: "3. Hafta",
     navStudio: "Ders Studio",
     navResearch: "Güncel Takip",
     heroEyebrow: "TR/ENG çift dilli ders platformu",
@@ -58,6 +59,24 @@ const translations = {
     stressCaseLabel: "Sistemi zorlayacak profil",
     runStressTest: "Stres testini çalıştır",
     week2PortfolioTitle: "2. hafta portfolyo çıktısı",
+    week3Eyebrow: "3. hafta uygulaması",
+    week3Title: "N-gram ile next-token prediction deneyini kur.",
+    ngramTrainerTitle: "N-gram eğitim alanı",
+    trainingTextLabel: "Eğitim metni",
+    nValueLabel: "n değeri",
+    temperatureLabel: "Temperature",
+    trainNgram: "Modeli eğit",
+    generationTitle: "Metin üretimi",
+    seedTextLabel: "Başlangıç metni",
+    maxLengthLabel: "Maksimum karakter",
+    generateNgram: "Metin üret",
+    probabilityTitle: "Olasılık tablosu",
+    experimentLogTitle: "Deney notu",
+    experimentObservationLabel: "n ve temperature değişince ne oldu?",
+    week3PortfolioTitle: "3. hafta portfolyo çıktısı",
+    modelSummary: "Model özeti",
+    contextLabel: "Bağlam",
+    nextCharLabel: "Sonraki karakter olasılıkları",
     recommendation: "Öneri",
     firedRules: "Çalışan kurallar",
     missingEvidence: "Eksik kanıt",
@@ -100,6 +119,7 @@ const translations = {
     navRoadmap: "Roadmap",
     navWeek1: "Week 1",
     navWeek2: "Week 2",
+    navWeek3: "Week 3",
     navStudio: "Course Studio",
     navResearch: "Research Radar",
     heroEyebrow: "TR/ENG bilingual course platform",
@@ -154,6 +174,24 @@ const translations = {
     stressCaseLabel: "Stress-test profile",
     runStressTest: "Run stress test",
     week2PortfolioTitle: "Week 2 portfolio artifact",
+    week3Eyebrow: "Week 3 lab",
+    week3Title: "Build a next-token prediction experiment with n-grams.",
+    ngramTrainerTitle: "N-gram training area",
+    trainingTextLabel: "Training text",
+    nValueLabel: "n value",
+    temperatureLabel: "Temperature",
+    trainNgram: "Train model",
+    generationTitle: "Text generation",
+    seedTextLabel: "Seed text",
+    maxLengthLabel: "Maximum characters",
+    generateNgram: "Generate text",
+    probabilityTitle: "Probability table",
+    experimentLogTitle: "Experiment note",
+    experimentObservationLabel: "What changed when n and temperature changed?",
+    week3PortfolioTitle: "Week 3 portfolio artifact",
+    modelSummary: "Model summary",
+    contextLabel: "Context",
+    nextCharLabel: "Next character probabilities",
     recommendation: "Recommendation",
     firedRules: "Fired rules",
     missingEvidence: "Missing evidence",
@@ -750,6 +788,113 @@ const week2Rubric = [
   },
 ];
 
+const defaultNgramTrainingText = [
+  "ai modelleri veriden oruntu ogrenmeye calisir",
+  "next token prediction dil modellemenin temel fikridir",
+  "rag sistemleri cevaplari kaynaklarla destekler",
+  "agent sistemleri plan yapar ve arac kullanir",
+  "iyi deney ayni soruyu farkli kosullarda tekrar eder",
+  "guvenilir ai ciktisi kanit sinir ve risk bilgisi tasir",
+].join("\n");
+
+const week3Readings = [
+  {
+    type: "core",
+    tr: {
+      title: "Next-token prediction fikri",
+      task: "Bir dil modelinin eğitim hedefini 'bağlamdan sonraki token' cümlesiyle açıkla.",
+    },
+    en: {
+      title: "The next-token prediction idea",
+      task: "Explain a language model's training objective as 'the next token after context'.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "N-gram ve bağlam penceresi",
+      task: "n=2, n=4 ve n=6 için modelin ne kadar geçmiş gördüğünü örnekle göster.",
+    },
+    en: {
+      title: "N-grams and context windows",
+      task: "Show how much history the model sees for n=2, n=4, and n=6.",
+    },
+  },
+  {
+    type: "core",
+    tr: {
+      title: "Temperature ve örnekleme",
+      task: "Düşük ve yüksek temperature değerlerinin çeşitlilik ve tutarlılık etkisini not et.",
+    },
+    en: {
+      title: "Temperature and sampling",
+      task: "Note how low and high temperature affect diversity and coherence.",
+    },
+  },
+  {
+    type: "optional",
+    tr: {
+      title: "N-gram'dan Transformer'a geçiş",
+      task: "N-gram'ın kısa bağlam sınırını Transformer attention fikriyle karşılaştır.",
+    },
+    en: {
+      title: "From n-grams to Transformers",
+      task: "Compare n-gram's short-context limitation with the Transformer attention idea.",
+    },
+  },
+];
+
+const week3Rubric = [
+  {
+    tr: {
+      criterion: "Olasılık yorumu",
+      strong: "Bağlam, sayım ve olasılık tablosu arasındaki ilişkiyi doğru açıklar.",
+      weak: "Üretilen metni gözlemler ama olasılığın nereden geldiğini açıklamaz.",
+    },
+    en: {
+      criterion: "Probability interpretation",
+      strong: "Correctly explains the relation between context, counts, and probability table.",
+      weak: "Observes generated text but does not explain where probabilities come from.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Deney karşılaştırması",
+      strong: "n ve temperature değişimlerini aynı seed ile sistematik karşılaştırır.",
+      weak: "Parametreleri rastgele dener; kontrollü karşılaştırma yapmaz.",
+    },
+    en: {
+      criterion: "Experiment comparison",
+      strong: "Systematically compares n and temperature changes with the same seed.",
+      weak: "Changes parameters randomly without a controlled comparison.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Sınırlılık analizi",
+      strong: "N-gram'ın anlam öğrenmediğini, kısa bağlam ve veri sparsity sınırlarını açıklar.",
+      weak: "Kötü çıktıyı sadece 'model zayıf' diye açıklar.",
+    },
+    en: {
+      criterion: "Limitation analysis",
+      strong: "Explains that n-grams do not learn meaning and are limited by short context and sparsity.",
+      weak: "Explains poor output only as 'the model is weak'.",
+    },
+  },
+  {
+    tr: {
+      criterion: "Modern LLM bağlantısı",
+      strong: "Next-token prediction, temperature ve context window kavramlarını modern LLM'lerle ilişkilendirir.",
+      weak: "N-gram deneyini modern LLM kavramlarından kopuk bırakır.",
+    },
+    en: {
+      criterion: "Modern LLM connection",
+      strong: "Connects next-token prediction, temperature, and context window to modern LLMs.",
+      weak: "Leaves the n-gram experiment disconnected from modern LLM concepts.",
+    },
+  },
+];
+
 const symbolicRules = [
   {
     id: "python-first",
@@ -841,6 +986,22 @@ const els = {
   buildWeek2PortfolioButton: document.querySelector("#buildWeek2PortfolioButton"),
   exampleWeek2Button: document.querySelector("#exampleWeek2Button"),
   copyWeek2PortfolioButton: document.querySelector("#copyWeek2PortfolioButton"),
+  ngramTrainingInput: document.querySelector("#ngramTrainingInput"),
+  ngramNInput: document.querySelector("#ngramNInput"),
+  ngramTemperatureInput: document.querySelector("#ngramTemperatureInput"),
+  trainNgramButton: document.querySelector("#trainNgramButton"),
+  ngramSeedInput: document.querySelector("#ngramSeedInput"),
+  ngramMaxInput: document.querySelector("#ngramMaxInput"),
+  generateNgramButton: document.querySelector("#generateNgramButton"),
+  ngramOutput: document.querySelector("#ngramOutput"),
+  ngramProbabilityOutput: document.querySelector("#ngramProbabilityOutput"),
+  ngramObservationInput: document.querySelector("#ngramObservationInput"),
+  week3ReadingList: document.querySelector("#week3ReadingList"),
+  week3RubricList: document.querySelector("#week3RubricList"),
+  week3PortfolioOutput: document.querySelector("#week3PortfolioOutput"),
+  buildWeek3PortfolioButton: document.querySelector("#buildWeek3PortfolioButton"),
+  exampleWeek3Button: document.querySelector("#exampleWeek3Button"),
+  copyWeek3PortfolioButton: document.querySelector("#copyWeek3PortfolioButton"),
   copyPromptButton: document.querySelector("#copyPromptButton"),
   copyStudioPrompt: document.querySelector("#copyStudioPrompt"),
   hypothesisInput: document.querySelector("#hypothesisInput"),
@@ -855,6 +1016,7 @@ render();
 restoreNotebook();
 restoreWeek1();
 restoreWeek2();
+restoreWeek3();
 
 els.langToggle.addEventListener("click", () => {
   state.lang = state.lang === "tr" ? "en" : "tr";
@@ -880,6 +1042,11 @@ els.runStressTestButton.addEventListener("click", runStressTest);
 els.buildWeek2PortfolioButton.addEventListener("click", buildWeek2Portfolio);
 els.exampleWeek2Button.addEventListener("click", fillExampleWeek2);
 els.copyWeek2PortfolioButton.addEventListener("click", () => copyText(els.week2PortfolioOutput.value));
+els.trainNgramButton.addEventListener("click", trainNgram);
+els.generateNgramButton.addEventListener("click", generateNgramText);
+els.buildWeek3PortfolioButton.addEventListener("click", buildWeek3Portfolio);
+els.exampleWeek3Button.addEventListener("click", fillExampleWeek3);
+els.copyWeek3PortfolioButton.addEventListener("click", () => copyText(els.week3PortfolioOutput.value));
 [els.learnerGoalInput, els.backgroundInput, els.timeInput, els.capstoneSelect, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
   input.addEventListener("input", saveWeek1);
   input.addEventListener("change", saveWeek1);
@@ -889,6 +1056,12 @@ els.copyWeek2PortfolioButton.addEventListener("click", () => copyText(els.week2P
   input.addEventListener("change", saveWeek2);
 });
 els.factGrid.querySelectorAll("input").forEach((input) => input.addEventListener("change", saveWeek2));
+[els.ngramTrainingInput, els.ngramNInput, els.ngramTemperatureInput, els.ngramSeedInput, els.ngramMaxInput, els.ngramObservationInput].forEach((input) => {
+  input.addEventListener("input", saveWeek3);
+  input.addEventListener("change", saveWeek3);
+});
+
+let ngramModel = null;
 
 function render() {
   document.documentElement.lang = state.lang;
@@ -898,6 +1071,7 @@ function render() {
   renderResearch();
   renderWeek1Academic();
   renderWeek2Academic();
+  renderWeek3Academic();
   renderComparisonGrid();
   renderProgress();
   updatePrompt();
@@ -917,7 +1091,7 @@ function renderTranslations() {
   [els.learnerGoalInput, els.backgroundInput, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
-  [els.ruleProfileInput, els.stressCaseInput].forEach((input) => {
+  [els.ruleProfileInput, els.stressCaseInput, els.ngramObservationInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
   renderRuleEditor();
@@ -1065,6 +1239,36 @@ function renderWeek2Academic() {
     .join("");
 
   els.week2RubricList.innerHTML = week2Rubric
+    .map((item) => {
+      const content = item[state.lang];
+      return `
+        <article class="rubric-item">
+          <h4>${escapeHtml(content.criterion)}</h4>
+          <p><strong>${escapeHtml(dict.rubricExcellent)}:</strong> ${escapeHtml(content.strong)}</p>
+          <p><strong>${escapeHtml(dict.rubricDeveloping)}:</strong> ${escapeHtml(content.weak)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderWeek3Academic() {
+  const dict = translations[state.lang];
+  els.week3ReadingList.innerHTML = week3Readings
+    .map((item) => {
+      const content = item[state.lang];
+      const label = item.type === "core" ? dict.readingCore : dict.readingOptional;
+      return `
+        <article class="resource-item">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(content.title)}</strong>
+          <p>${escapeHtml(content.task)}</p>
+        </article>
+      `;
+    })
+    .join("");
+
+  els.week3RubricList.innerHTML = week3Rubric
     .map((item) => {
       const content = item[state.lang];
       return `
@@ -1480,6 +1684,177 @@ function restoreWeek2() {
   els.stressCaseInput.value = saved.stressCase || "";
   els.stressOutput.innerHTML = saved.stressOutput || "";
   els.week2PortfolioOutput.value = saved.portfolio || "";
+}
+
+function trainNgram() {
+  const n = clamp(Number(els.ngramNInput.value) || 4, 2, 8);
+  const text = normalizeNgramText(els.ngramTrainingInput.value || defaultNgramTrainingText);
+  const table = new Map();
+  const paddedLines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => `${"~".repeat(n - 1)}${line}$`);
+
+  paddedLines.forEach((line) => {
+    for (let index = 0; index <= line.length - n; index += 1) {
+      const context = line.slice(index, index + n - 1);
+      const next = line[index + n - 1];
+      if (!table.has(context)) table.set(context, new Map());
+      table.get(context).set(next, (table.get(context).get(next) || 0) + 1);
+    }
+  });
+
+  ngramModel = { n, table, trainingLines: paddedLines.length };
+  renderNgramProbabilities();
+  saveWeek3();
+  showToast(translations[state.lang].saved);
+}
+
+function generateNgramText() {
+  if (!ngramModel) trainNgram();
+  const temperature = clamp(Number(els.ngramTemperatureInput.value) || 0.8, 0.2, 2);
+  const maxLength = clamp(Number(els.ngramMaxInput.value) || 90, 20, 240);
+  let output = normalizeNgramText(els.ngramSeedInput.value || "ai").replace(/\n/g, " ");
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const next = sampleNextChar(output, temperature);
+    if (!next || next === "$") break;
+    output += next;
+  }
+
+  els.ngramOutput.textContent = output;
+  renderNgramProbabilities();
+  saveWeek3();
+}
+
+function sampleNextChar(output, temperature) {
+  const context = getCurrentContext(output);
+  const counts = ngramModel.table.get(context);
+  if (!counts) return "";
+  const weighted = Array.from(counts.entries()).map(([char, count]) => [char, Math.pow(count, 1 / temperature)]);
+  const total = weighted.reduce((sum, [, weight]) => sum + weight, 0);
+  let pick = Math.random() * total;
+  for (const [char, weight] of weighted) {
+    pick -= weight;
+    if (pick <= 0) return char;
+  }
+  return weighted[0]?.[0] || "";
+}
+
+function renderNgramProbabilities() {
+  if (!ngramModel) return;
+  const dict = translations[state.lang];
+  const context = getCurrentContext(els.ngramSeedInput.value || "");
+  const counts = ngramModel.table.get(context);
+  const rows = counts ? Array.from(counts.entries()).sort((a, b) => b[1] - a[1]) : [];
+  const total = rows.reduce((sum, [, count]) => sum + count, 0);
+  const summary =
+    state.lang === "tr"
+      ? `${ngramModel.trainingLines} satır, n=${ngramModel.n}, ${ngramModel.table.size} farklı bağlam`
+      : `${ngramModel.trainingLines} lines, n=${ngramModel.n}, ${ngramModel.table.size} unique contexts`;
+
+  els.ngramProbabilityOutput.innerHTML = `
+    <div class="detail-block">
+      <h4>${dict.modelSummary}</h4>
+      <p>${escapeHtml(summary)}</p>
+    </div>
+    <div class="detail-block">
+      <h4>${dict.contextLabel}</h4>
+      <p>${escapeHtml(context || "-")}</p>
+    </div>
+    <div class="probability-list">
+      <h4>${dict.nextCharLabel}</h4>
+      ${
+        rows.length
+          ? rows
+              .map(([char, count]) => {
+                const percent = Math.round((count / total) * 100);
+                const label = char === " " ? "space" : char === "$" ? "end" : char;
+                return `<div class="probability-row"><span>${escapeHtml(label)}</span><b>${percent}%</b><i style="width:${percent}%"></i></div>`;
+              })
+              .join("")
+          : `<p>${state.lang === "tr" ? "Bu bağlam eğitim metninde yok." : "This context does not exist in the training text."}</p>`
+      }
+    </div>
+  `;
+}
+
+function getCurrentContext(text) {
+  if (!ngramModel) return "";
+  const clean = normalizeNgramText(text).replace(/\n/g, " ");
+  const padded = `${"~".repeat(ngramModel.n - 1)}${clean}`;
+  return padded.slice(-(ngramModel.n - 1));
+}
+
+function normalizeNgramText(text) {
+  return String(text)
+    .toLocaleLowerCase("tr-TR")
+    .replace(/\r/g, "")
+    .replace(/[^\p{L}\p{N}\s.,!?-]/gu, "")
+    .replace(/[ \t]+/g, " ")
+    .trim();
+}
+
+function buildWeek3Portfolio() {
+  if (!ngramModel) trainNgram();
+  const context = getCurrentContext(els.ngramSeedInput.value || "");
+  els.week3PortfolioOutput.value =
+    state.lang === "tr"
+      ? `# AI Evolution Lab - 3. Hafta Portfolyo Çıktısı\n\n## Mini N-gram Modeli\nn değeri: ${els.ngramNInput.value}\nTemperature: ${els.ngramTemperatureInput.value}\nEğitim satırı: ${ngramModel.trainingLines}\nFarklı bağlam sayısı: ${ngramModel.table.size}\n\n## Üretim Deneyi\nSeed: ${els.ngramSeedInput.value || "-"}\nBağlam: ${context || "-"}\nÜretilen metin: ${els.ngramOutput.textContent || "-"}\n\n## Deney Gözlemi\n${els.ngramObservationInput.value || "-"}\n\n## Yansıtma\nN-gram modeli anlam öğrenmez; eğitim metnindeki kısa bağlam sayımlarından sonraki karakter olasılıklarını çıkarır. Bu küçük deney, modern LLM'lerdeki next-token prediction fikrinin çok sade bir analojisidir.`
+      : `# AI Evolution Lab - Week 3 Portfolio Artifact\n\n## Mini N-gram Model\nn value: ${els.ngramNInput.value}\nTemperature: ${els.ngramTemperatureInput.value}\nTraining lines: ${ngramModel.trainingLines}\nUnique contexts: ${ngramModel.table.size}\n\n## Generation Experiment\nSeed: ${els.ngramSeedInput.value || "-"}\nContext: ${context || "-"}\nGenerated text: ${els.ngramOutput.textContent || "-"}\n\n## Experiment Observation\n${els.ngramObservationInput.value || "-"}\n\n## Reflection\nAn n-gram model does not learn meaning; it estimates next-character probabilities from short context counts in the training text. This small experiment is a simple analogy for next-token prediction in modern LLMs.`;
+  saveWeek3();
+  showToast(translations[state.lang].saved);
+}
+
+function fillExampleWeek3() {
+  els.ngramTrainingInput.value = defaultNgramTrainingText;
+  els.ngramNInput.value = "4";
+  els.ngramTemperatureInput.value = "0.8";
+  els.ngramSeedInput.value = "ai";
+  els.ngramMaxInput.value = "100";
+  els.ngramObservationInput.value =
+    state.lang === "tr"
+      ? "n büyüdükçe çıktı eğitim metnine daha çok benziyor ama bilinmeyen bağlamlarda kolayca duruyor. Temperature yükseldikçe çeşitlilik artıyor, tutarlılık azalıyor."
+      : "As n increases, output resembles the training text more, but it stops easily on unseen contexts. Higher temperature increases diversity and reduces coherence.";
+  trainNgram();
+  generateNgramText();
+  buildWeek3Portfolio();
+}
+
+function saveWeek3() {
+  localStorage.setItem(
+    "ai-evolution-week3",
+    JSON.stringify({
+      training: els.ngramTrainingInput.value,
+      n: els.ngramNInput.value,
+      temperature: els.ngramTemperatureInput.value,
+      seed: els.ngramSeedInput.value,
+      max: els.ngramMaxInput.value,
+      output: els.ngramOutput.textContent,
+      probability: els.ngramProbabilityOutput.innerHTML,
+      observation: els.ngramObservationInput.value,
+      portfolio: els.week3PortfolioOutput.value,
+    }),
+  );
+}
+
+function restoreWeek3() {
+  const saved = JSON.parse(localStorage.getItem("ai-evolution-week3") || "{}");
+  els.ngramTrainingInput.value = saved.training || defaultNgramTrainingText;
+  els.ngramNInput.value = saved.n || "4";
+  els.ngramTemperatureInput.value = saved.temperature || "0.8";
+  els.ngramSeedInput.value = saved.seed || "ai";
+  els.ngramMaxInput.value = saved.max || "90";
+  els.ngramOutput.textContent = saved.output || "";
+  els.ngramProbabilityOutput.innerHTML = saved.probability || "";
+  els.ngramObservationInput.value = saved.observation || "";
+  els.week3PortfolioOutput.value = saved.portfolio || "";
+  trainNgram();
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
 async function copyText(text, fallbackElement = null) {
