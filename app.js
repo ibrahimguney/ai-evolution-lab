@@ -5,6 +5,7 @@ const translations = {
     navWeek1: "1. Hafta",
     navWeek2: "2. Hafta",
     navWeek3: "3. Hafta",
+    navWeek4: "4. Hafta",
     navStudio: "Ders Studio",
     navResearch: "Güncel Takip",
     heroEyebrow: "TR/ENG çift dilli ders platformu",
@@ -77,6 +78,22 @@ const translations = {
     modelSummary: "Model özeti",
     contextLabel: "Bağlam",
     nextCharLabel: "Sonraki karakter olasılıkları",
+    week4Eyebrow: "4. hafta uygulaması",
+    week4Title: "Veriden öğrenen küçük bir sınıflandırıcı kur.",
+    classifierTitle: "ML sınıflandırıcı simülatörü",
+    sampleCountLabel: "Örnek sayısı",
+    trainRatioLabel: "Train oranı",
+    noiseLabel: "Gürültü",
+    modelComplexityLabel: "Model karmaşıklığı",
+    runMl: "Deneyi çalıştır",
+    metricsTitle: "Metrikler",
+    datasetPreviewTitle: "Veri önizleme",
+    mlObservationLabel: "Train/test ve overfitting hakkında ne gözledin?",
+    week4PortfolioTitle: "4. hafta portfolyo çıktısı",
+    trainAccuracy: "Train accuracy",
+    testAccuracy: "Test accuracy",
+    thresholdLabel: "Eşik",
+    gapLabel: "Genelleme farkı",
     recommendation: "Öneri",
     firedRules: "Çalışan kurallar",
     missingEvidence: "Eksik kanıt",
@@ -120,6 +137,7 @@ const translations = {
     navWeek1: "Week 1",
     navWeek2: "Week 2",
     navWeek3: "Week 3",
+    navWeek4: "Week 4",
     navStudio: "Course Studio",
     navResearch: "Research Radar",
     heroEyebrow: "TR/ENG bilingual course platform",
@@ -192,6 +210,22 @@ const translations = {
     modelSummary: "Model summary",
     contextLabel: "Context",
     nextCharLabel: "Next character probabilities",
+    week4Eyebrow: "Week 4 lab",
+    week4Title: "Build a small classifier that learns from data.",
+    classifierTitle: "ML classifier simulator",
+    sampleCountLabel: "Sample count",
+    trainRatioLabel: "Train ratio",
+    noiseLabel: "Noise",
+    modelComplexityLabel: "Model complexity",
+    runMl: "Run experiment",
+    metricsTitle: "Metrics",
+    datasetPreviewTitle: "Dataset preview",
+    mlObservationLabel: "What did you observe about train/test split and overfitting?",
+    week4PortfolioTitle: "Week 4 portfolio artifact",
+    trainAccuracy: "Train accuracy",
+    testAccuracy: "Test accuracy",
+    thresholdLabel: "Threshold",
+    gapLabel: "Generalization gap",
     recommendation: "Recommendation",
     firedRules: "Fired rules",
     missingEvidence: "Missing evidence",
@@ -895,6 +929,48 @@ const week3Rubric = [
   },
 ];
 
+const week4Readings = [
+  {
+    type: "core",
+    tr: { title: "Feature / label ayrımı", task: "Bir tahmin probleminde girdi özellikleri ve hedef etiketi ayır." },
+    en: { title: "Feature / label separation", task: "Separate input features and target label in one prediction problem." },
+  },
+  {
+    type: "core",
+    tr: { title: "Train-test split", task: "Aynı modelin train ve test performansının neden ayrı ölçüldüğünü açıkla." },
+    en: { title: "Train-test split", task: "Explain why train and test performance are measured separately." },
+  },
+  {
+    type: "core",
+    tr: { title: "Confusion matrix", task: "TP, FP, TN, FN hücrelerini bir AI eğitim örneğiyle yorumla." },
+    en: { title: "Confusion matrix", task: "Interpret TP, FP, TN, FN with one AI education example." },
+  },
+  {
+    type: "optional",
+    tr: { title: "Overfitting ve genelleme", task: "Yüksek train accuracy ama düşük test accuracy durumunun neden riskli olduğunu yaz." },
+    en: { title: "Overfitting and generalization", task: "Write why high train accuracy but low test accuracy is risky." },
+  },
+];
+
+const week4Rubric = [
+  {
+    tr: { criterion: "Veri şeması", strong: "Feature, label ve veri üretim varsayımını açıklar.", weak: "Model sonucunu verir ama verinin neyi temsil ettiğini açıklamaz." },
+    en: { criterion: "Data schema", strong: "Explains features, labels, and data generation assumptions.", weak: "Reports model results without explaining what the data represents." },
+  },
+  {
+    tr: { criterion: "Metrik yorumu", strong: "Accuracy ve confusion matrix hücrelerini birlikte yorumlar.", weak: "Sadece tek bir accuracy değeriyle karar verir." },
+    en: { criterion: "Metric interpretation", strong: "Interprets accuracy and confusion matrix cells together.", weak: "Decides using only a single accuracy value." },
+  },
+  {
+    tr: { criterion: "Overfitting analizi", strong: "Train/test farkını genelleme riskiyle ilişkilendirir.", weak: "Train skorunu başarı olarak kabul edip test skorunu ihmal eder." },
+    en: { criterion: "Overfitting analysis", strong: "Relates train/test gap to generalization risk.", weak: "Treats train score as success and ignores test score." },
+  },
+  {
+    tr: { criterion: "Deney kontrolü", strong: "Örnek sayısı, gürültü ve model karmaşıklığını kontrollü değiştirir.", weak: "Parametreleri değiştirir ama gözlemi sistematik kaydetmez." },
+    en: { criterion: "Experiment control", strong: "Changes sample count, noise, and complexity in a controlled way.", weak: "Changes parameters without systematic observation." },
+  },
+];
+
 const symbolicRules = [
   {
     id: "python-first",
@@ -1002,6 +1078,21 @@ const els = {
   buildWeek3PortfolioButton: document.querySelector("#buildWeek3PortfolioButton"),
   exampleWeek3Button: document.querySelector("#exampleWeek3Button"),
   copyWeek3PortfolioButton: document.querySelector("#copyWeek3PortfolioButton"),
+  mlSampleInput: document.querySelector("#mlSampleInput"),
+  mlTrainRatioInput: document.querySelector("#mlTrainRatioInput"),
+  mlNoiseInput: document.querySelector("#mlNoiseInput"),
+  mlComplexitySelect: document.querySelector("#mlComplexitySelect"),
+  runMlButton: document.querySelector("#runMlButton"),
+  mlMetricGrid: document.querySelector("#mlMetricGrid"),
+  mlConfusionMatrix: document.querySelector("#mlConfusionMatrix"),
+  mlDataPreview: document.querySelector("#mlDataPreview"),
+  mlObservationInput: document.querySelector("#mlObservationInput"),
+  week4ReadingList: document.querySelector("#week4ReadingList"),
+  week4RubricList: document.querySelector("#week4RubricList"),
+  week4PortfolioOutput: document.querySelector("#week4PortfolioOutput"),
+  buildWeek4PortfolioButton: document.querySelector("#buildWeek4PortfolioButton"),
+  exampleWeek4Button: document.querySelector("#exampleWeek4Button"),
+  copyWeek4PortfolioButton: document.querySelector("#copyWeek4PortfolioButton"),
   copyPromptButton: document.querySelector("#copyPromptButton"),
   copyStudioPrompt: document.querySelector("#copyStudioPrompt"),
   hypothesisInput: document.querySelector("#hypothesisInput"),
@@ -1017,6 +1108,7 @@ restoreNotebook();
 restoreWeek1();
 restoreWeek2();
 restoreWeek3();
+restoreWeek4();
 
 els.langToggle.addEventListener("click", () => {
   state.lang = state.lang === "tr" ? "en" : "tr";
@@ -1047,6 +1139,10 @@ els.generateNgramButton.addEventListener("click", generateNgramText);
 els.buildWeek3PortfolioButton.addEventListener("click", buildWeek3Portfolio);
 els.exampleWeek3Button.addEventListener("click", fillExampleWeek3);
 els.copyWeek3PortfolioButton.addEventListener("click", () => copyText(els.week3PortfolioOutput.value));
+els.runMlButton.addEventListener("click", runMlExperiment);
+els.buildWeek4PortfolioButton.addEventListener("click", buildWeek4Portfolio);
+els.exampleWeek4Button.addEventListener("click", fillExampleWeek4);
+els.copyWeek4PortfolioButton.addEventListener("click", () => copyText(els.week4PortfolioOutput.value));
 [els.learnerGoalInput, els.backgroundInput, els.timeInput, els.capstoneSelect, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
   input.addEventListener("input", saveWeek1);
   input.addEventListener("change", saveWeek1);
@@ -1060,8 +1156,13 @@ els.factGrid.querySelectorAll("input").forEach((input) => input.addEventListener
   input.addEventListener("input", saveWeek3);
   input.addEventListener("change", saveWeek3);
 });
+[els.mlSampleInput, els.mlTrainRatioInput, els.mlNoiseInput, els.mlComplexitySelect, els.mlObservationInput].forEach((input) => {
+  input.addEventListener("input", saveWeek4);
+  input.addEventListener("change", saveWeek4);
+});
 
 let ngramModel = null;
+let mlResult = null;
 
 function render() {
   document.documentElement.lang = state.lang;
@@ -1072,6 +1173,7 @@ function render() {
   renderWeek1Academic();
   renderWeek2Academic();
   renderWeek3Academic();
+  renderWeek4Academic();
   renderComparisonGrid();
   renderProgress();
   updatePrompt();
@@ -1091,7 +1193,7 @@ function renderTranslations() {
   [els.learnerGoalInput, els.backgroundInput, els.comparisonPromptInput, els.newsSourceInput, els.newsClaimInput, els.newsImpactInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
-  [els.ruleProfileInput, els.stressCaseInput, els.ngramObservationInput].forEach((input) => {
+  [els.ruleProfileInput, els.stressCaseInput, els.ngramObservationInput, els.mlObservationInput].forEach((input) => {
     input.placeholder = input.dataset[`placeholder${state.lang === "tr" ? "Tr" : "En"}`];
   });
   renderRuleEditor();
@@ -1269,6 +1371,36 @@ function renderWeek3Academic() {
     .join("");
 
   els.week3RubricList.innerHTML = week3Rubric
+    .map((item) => {
+      const content = item[state.lang];
+      return `
+        <article class="rubric-item">
+          <h4>${escapeHtml(content.criterion)}</h4>
+          <p><strong>${escapeHtml(dict.rubricExcellent)}:</strong> ${escapeHtml(content.strong)}</p>
+          <p><strong>${escapeHtml(dict.rubricDeveloping)}:</strong> ${escapeHtml(content.weak)}</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderWeek4Academic() {
+  const dict = translations[state.lang];
+  els.week4ReadingList.innerHTML = week4Readings
+    .map((item) => {
+      const content = item[state.lang];
+      const label = item.type === "core" ? dict.readingCore : dict.readingOptional;
+      return `
+        <article class="resource-item">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(content.title)}</strong>
+          <p>${escapeHtml(content.task)}</p>
+        </article>
+      `;
+    })
+    .join("");
+
+  els.week4RubricList.innerHTML = week4Rubric
     .map((item) => {
       const content = item[state.lang];
       return `
@@ -1851,6 +1983,177 @@ function restoreWeek3() {
   els.ngramObservationInput.value = saved.observation || "";
   els.week3PortfolioOutput.value = saved.portfolio || "";
   trainNgram();
+}
+
+function runMlExperiment() {
+  const count = clamp(Number(els.mlSampleInput.value) || 80, 20, 240);
+  const trainRatio = clamp(Number(els.mlTrainRatioInput.value) || 70, 50, 90) / 100;
+  const noise = clamp(Number(els.mlNoiseInput.value) || 12, 0, 35) / 100;
+  const complexity = els.mlComplexitySelect.value;
+  const data = buildMlDataset(count, noise);
+  const splitIndex = Math.max(4, Math.floor(data.length * trainRatio));
+  const train = data.slice(0, splitIndex);
+  const test = data.slice(splitIndex);
+  const threshold = learnThreshold(train);
+  const memorized = new Map(train.map((row) => [row.id, row.label]));
+  const predictor = (row, group) => {
+    if (complexity === "overfit" && group === "train") return memorized.get(row.id);
+    if (complexity === "overfit" && group === "test") return row.practice + row.math + row.project > threshold + 18 ? 1 : 0;
+    return row.practice + row.math + row.project > threshold ? 1 : 0;
+  };
+
+  const trainEval = evaluateRows(train, (row) => predictor(row, "train"));
+  const testEval = evaluateRows(test, (row) => predictor(row, "test"));
+  mlResult = { data, train, test, threshold, trainEval, testEval, complexity, noise };
+  renderMlResult();
+  saveWeek4();
+  showToast(translations[state.lang].saved);
+}
+
+function buildMlDataset(count, noise) {
+  return Array.from({ length: count }, (_, index) => {
+    const practice = pseudoRandom(index, 17);
+    const math = pseudoRandom(index, 41);
+    const project = pseudoRandom(index, 73);
+    const score = practice * 0.42 + math * 0.3 + project * 0.28;
+    const noisy = pseudoRandom(index, 97) < noise;
+    const label = score > 55 ? 1 : 0;
+    return {
+      id: `S${String(index + 1).padStart(3, "0")}`,
+      practice: Math.round(practice * 100),
+      math: Math.round(math * 100),
+      project: Math.round(project * 100),
+      label: noisy ? 1 - label : label,
+    };
+  });
+}
+
+function pseudoRandom(index, salt) {
+  const value = Math.sin((index + 1) * salt * 12.9898) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+function learnThreshold(rows) {
+  let bestThreshold = 120;
+  let bestAccuracy = -1;
+  for (let threshold = 20; threshold <= 280; threshold += 5) {
+    const evaluation = evaluateRows(rows, (row) => (row.practice + row.math + row.project > threshold ? 1 : 0));
+    if (evaluation.accuracy > bestAccuracy) {
+      bestAccuracy = evaluation.accuracy;
+      bestThreshold = threshold;
+    }
+  }
+  return bestThreshold;
+}
+
+function evaluateRows(rows, predict) {
+  const matrix = { tp: 0, fp: 0, tn: 0, fn: 0 };
+  rows.forEach((row) => {
+    const prediction = predict(row);
+    if (prediction === 1 && row.label === 1) matrix.tp += 1;
+    if (prediction === 1 && row.label === 0) matrix.fp += 1;
+    if (prediction === 0 && row.label === 0) matrix.tn += 1;
+    if (prediction === 0 && row.label === 1) matrix.fn += 1;
+  });
+  return {
+    ...matrix,
+    total: rows.length,
+    accuracy: rows.length ? (matrix.tp + matrix.tn) / rows.length : 0,
+  };
+}
+
+function renderMlResult() {
+  if (!mlResult) return;
+  const dict = translations[state.lang];
+  const gap = mlResult.trainEval.accuracy - mlResult.testEval.accuracy;
+  els.mlMetricGrid.innerHTML = `
+    <span><strong>${formatPercent(mlResult.trainEval.accuracy)}</strong><small>${dict.trainAccuracy}</small></span>
+    <span><strong>${formatPercent(mlResult.testEval.accuracy)}</strong><small>${dict.testAccuracy}</small></span>
+    <span><strong>${mlResult.threshold}</strong><small>${dict.thresholdLabel}</small></span>
+    <span><strong>${formatPercent(gap)}</strong><small>${dict.gapLabel}</small></span>
+  `;
+  els.mlConfusionMatrix.innerHTML = renderConfusionMatrix(mlResult.testEval);
+  els.mlDataPreview.innerHTML = renderDataPreview(mlResult.data.slice(0, 10));
+}
+
+function renderConfusionMatrix(matrix) {
+  return `
+    <div class="matrix-grid">
+      <span></span><strong>Pred 1</strong><strong>Pred 0</strong>
+      <strong>Actual 1</strong><b>${matrix.tp}</b><b>${matrix.fn}</b>
+      <strong>Actual 0</strong><b>${matrix.fp}</b><b>${matrix.tn}</b>
+    </div>
+  `;
+}
+
+function renderDataPreview(rows) {
+  return `
+    <table>
+      <thead><tr><th>ID</th><th>Practice</th><th>Math</th><th>Project</th><th>Label</th></tr></thead>
+      <tbody>
+        ${rows.map((row) => `<tr><td>${row.id}</td><td>${row.practice}</td><td>${row.math}</td><td>${row.project}</td><td>${row.label}</td></tr>`).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function buildWeek4Portfolio() {
+  if (!mlResult) runMlExperiment();
+  const gap = mlResult.trainEval.accuracy - mlResult.testEval.accuracy;
+  els.week4PortfolioOutput.value =
+    state.lang === "tr"
+      ? `# AI Evolution Lab - 4. Hafta Portfolyo Çıktısı\n\n## ML Sınıflandırıcı Deneyi\nÖrnek sayısı: ${els.mlSampleInput.value}\nTrain oranı: ${els.mlTrainRatioInput.value}%\nGürültü: ${els.mlNoiseInput.value}%\nModel karmaşıklığı: ${els.mlComplexitySelect.value}\nÖğrenilen eşik: ${mlResult.threshold}\n\n## Metrikler\nTrain accuracy: ${formatPercent(mlResult.trainEval.accuracy)}\nTest accuracy: ${formatPercent(mlResult.testEval.accuracy)}\nGenelleme farkı: ${formatPercent(gap)}\nConfusion matrix: TP=${mlResult.testEval.tp}, FP=${mlResult.testEval.fp}, TN=${mlResult.testEval.tn}, FN=${mlResult.testEval.fn}\n\n## Deney Gözlemi\n${els.mlObservationInput.value || "-"}\n\n## Yansıtma\nTrain başarısı tek başına yeterli değildir. Modelin öğrenip öğrenmediğini anlamak için ayrı test verisi, hata türleri ve train-test farkı birlikte incelenmelidir.`
+      : `# AI Evolution Lab - Week 4 Portfolio Artifact\n\n## ML Classifier Experiment\nSample count: ${els.mlSampleInput.value}\nTrain ratio: ${els.mlTrainRatioInput.value}%\nNoise: ${els.mlNoiseInput.value}%\nModel complexity: ${els.mlComplexitySelect.value}\nLearned threshold: ${mlResult.threshold}\n\n## Metrics\nTrain accuracy: ${formatPercent(mlResult.trainEval.accuracy)}\nTest accuracy: ${formatPercent(mlResult.testEval.accuracy)}\nGeneralization gap: ${formatPercent(gap)}\nConfusion matrix: TP=${mlResult.testEval.tp}, FP=${mlResult.testEval.fp}, TN=${mlResult.testEval.tn}, FN=${mlResult.testEval.fn}\n\n## Experiment Observation\n${els.mlObservationInput.value || "-"}\n\n## Reflection\nTraining performance alone is not enough. To judge whether a model learned, we need separate test data, error types, and the train-test gap together.`;
+  saveWeek4();
+  showToast(translations[state.lang].saved);
+}
+
+function fillExampleWeek4() {
+  els.mlSampleInput.value = "96";
+  els.mlTrainRatioInput.value = "70";
+  els.mlNoiseInput.value = "14";
+  els.mlComplexitySelect.value = "overfit";
+  els.mlObservationInput.value =
+    state.lang === "tr"
+      ? "Overfit model train tarafında çok yüksek başarı verdi ama test başarısı daha düşük kaldı. Simple threshold modeli daha az iddialı olsa da genelleme farkı daha okunabilir."
+      : "The overfit model achieved very high training accuracy but lower test performance. The simple threshold model is less ambitious, but its generalization gap is easier to interpret.";
+  runMlExperiment();
+  buildWeek4Portfolio();
+}
+
+function saveWeek4() {
+  localStorage.setItem(
+    "ai-evolution-week4",
+    JSON.stringify({
+      samples: els.mlSampleInput.value,
+      ratio: els.mlTrainRatioInput.value,
+      noise: els.mlNoiseInput.value,
+      complexity: els.mlComplexitySelect.value,
+      metrics: els.mlMetricGrid.innerHTML,
+      matrix: els.mlConfusionMatrix.innerHTML,
+      preview: els.mlDataPreview.innerHTML,
+      observation: els.mlObservationInput.value,
+      portfolio: els.week4PortfolioOutput.value,
+    }),
+  );
+}
+
+function restoreWeek4() {
+  const saved = JSON.parse(localStorage.getItem("ai-evolution-week4") || "{}");
+  els.mlSampleInput.value = saved.samples || "80";
+  els.mlTrainRatioInput.value = saved.ratio || "70";
+  els.mlNoiseInput.value = saved.noise || "12";
+  els.mlComplexitySelect.value = saved.complexity || "simple";
+  els.mlMetricGrid.innerHTML = saved.metrics || "";
+  els.mlConfusionMatrix.innerHTML = saved.matrix || "";
+  els.mlDataPreview.innerHTML = saved.preview || "";
+  els.mlObservationInput.value = saved.observation || "";
+  els.week4PortfolioOutput.value = saved.portfolio || "";
+  runMlExperiment();
+}
+
+function formatPercent(value) {
+  return `${Math.round(value * 100)}%`;
 }
 
 function clamp(value, min, max) {

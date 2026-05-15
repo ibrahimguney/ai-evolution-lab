@@ -543,7 +543,8 @@ select:focus {
 
 #portfolioOutput,
 #week2PortfolioOutput,
-#week3PortfolioOutput {
+#week3PortfolioOutput,
+#week4PortfolioOutput {
   min-height: 360px;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
   font-size: 0.92rem;
@@ -604,6 +605,59 @@ select:focus {
   content: "Run the rule system to see the explanation trace.";
   color: var(--muted);
   font-weight: 750;
+}
+
+.confusion-matrix,
+.data-table {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8faf7;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 360px;
+}
+
+.matrix-grid span,
+.matrix-grid strong,
+.matrix-grid b {
+  display: grid;
+  min-height: 46px;
+  place-items: center;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 8px;
+}
+
+.matrix-grid strong {
+  color: var(--accent-strong);
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.matrix-grid b {
+  background: #fff;
+  font-size: 1.2rem;
+}
+
+.data-table table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.data-table th {
+  color: var(--accent-strong);
+  background: rgba(15, 118, 110, 0.08);
 }
 
 .resource-list,

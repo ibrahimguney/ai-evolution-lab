@@ -25,6 +25,7 @@
         <a href="#week1" data-i18n="navWeek1">1. Hafta</a>
         <a href="#week2" data-i18n="navWeek2">2. Hafta</a>
         <a href="#week3" data-i18n="navWeek3">3. Hafta</a>
+        <a href="#week4" data-i18n="navWeek4">4. Hafta</a>
         <a href="#studio" data-i18n="navStudio">Ders Studio</a>
         <a href="#research" data-i18n="navResearch">Güncel Takip</a>
       </nav>
@@ -342,6 +343,86 @@
             <button class="primary-button" id="buildWeek3PortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
             <button class="secondary-button" id="exampleWeek3Button" type="button" data-i18n="examplePortfolio">Örnek doldur</button>
             <button class="secondary-button" id="copyWeek3PortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="week-lab" id="week4" aria-labelledby="week4-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="week4Eyebrow">4. hafta uygulaması</p>
+          <h2 id="week4-title" data-i18n="week4Title">Veriden öğrenen küçük bir sınıflandırıcı kur.</h2>
+        </div>
+
+        <div class="week1-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="classifierTitle">ML sınıflandırıcı simülatörü</h3>
+            <div class="compact-grid">
+              <label>
+                <span data-i18n="sampleCountLabel">Örnek sayısı</span>
+                <input id="mlSampleInput" type="number" min="20" max="240" value="80" />
+              </label>
+              <label>
+                <span data-i18n="trainRatioLabel">Train oranı</span>
+                <input id="mlTrainRatioInput" type="number" min="50" max="90" value="70" />
+              </label>
+              <label>
+                <span data-i18n="noiseLabel">Gürültü</span>
+                <input id="mlNoiseInput" type="number" min="0" max="35" value="12" />
+              </label>
+              <label>
+                <span data-i18n="modelComplexityLabel">Model karmaşıklığı</span>
+                <select id="mlComplexitySelect">
+                  <option value="simple">Simple threshold</option>
+                  <option value="overfit">Overfit memorizer</option>
+                </select>
+              </label>
+            </div>
+            <button class="primary-button full-button" id="runMlButton" type="button" data-i18n="runMl">
+              Deneyi çalıştır
+            </button>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="metricsTitle">Metrikler</h3>
+            <div class="stat-grid" id="mlMetricGrid"></div>
+            <div class="confusion-matrix" id="mlConfusionMatrix"></div>
+          </section>
+        </div>
+
+        <div class="academic-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="datasetPreviewTitle">Veri önizleme</h3>
+            <div class="data-table" id="mlDataPreview"></div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="experimentLogTitle">Deney notu</h3>
+            <label>
+              <span data-i18n="mlObservationLabel">Train/test ve overfitting hakkında ne gözledin?</span>
+              <textarea id="mlObservationInput" data-placeholder-tr="Simple model ile overfit modelin train ve test accuracy farkını yorumla." data-placeholder-en="Interpret the train/test accuracy gap between the simple and overfit model."></textarea>
+            </label>
+          </section>
+        </div>
+
+        <div class="academic-grid">
+          <section class="panel lab-panel">
+            <h3 data-i18n="readingListTitle">Okuma listesi</h3>
+            <div class="resource-list" id="week4ReadingList"></div>
+          </section>
+
+          <section class="panel lab-panel">
+            <h3 data-i18n="graduateRubricTitle">Lisansüstü değerlendirme rubriği</h3>
+            <div class="rubric-list" id="week4RubricList"></div>
+          </section>
+        </div>
+
+        <section class="panel lab-panel">
+          <h3 data-i18n="week4PortfolioTitle">4. hafta portfolyo çıktısı</h3>
+          <textarea id="week4PortfolioOutput" spellcheck="false"></textarea>
+          <div class="notes-actions">
+            <button class="primary-button" id="buildWeek4PortfolioButton" type="button" data-i18n="buildPortfolio">Portfolyo özeti üret</button>
+            <button class="secondary-button" id="exampleWeek4Button" type="button" data-i18n="examplePortfolio">Örnek doldur</button>
+            <button class="secondary-button" id="copyWeek4PortfolioButton" type="button" data-i18n="copyPortfolio">Kopyala</button>
           </div>
         </section>
       </section>
